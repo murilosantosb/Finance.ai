@@ -1,0 +1,20 @@
+$bg-primary: #0b0b0d;
+$bg-secondary: #141414;
+$dark-green: #161716;
+$green: #55b02e;
+$red: #e93030;
+$dark-gray: #1f1f21;
+$gray: #71717a;
+$light-gray: #bbbbbb;
+$white: #ffffff;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.body {
+  background-color: $bg-primary;
+}
+

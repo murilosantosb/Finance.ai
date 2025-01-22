@@ -1,0 +1,41 @@
+@import "./globals.scss";
+
+
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 15px;
+  
+    span.brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+  
+    h1 {
+      color: $white;
+    }
+  
+    p {
+      color: $gray;
+      font-size: 1rem;
+    }
+  
+    @media (min-width: 1400px) {
+      width: 500px;
+      margin: auto;
+    }
+  }
+  
+  .login-desktop {
+    display: none;
+  
+    @media (min-width: 1400px) {
+      display: block;
+      img {
+        border-radius: 10px;
+      }
+}
+}
+  
