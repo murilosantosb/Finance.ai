@@ -1,6 +1,9 @@
+"use client";
 
-import React from 'react'
-import Image from 'next/image'
+import React from 'react';
+import Image from 'next/image';
+import { Button } from 'react-bootstrap';
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   return (
@@ -21,10 +24,12 @@ const Login = () => {
            que utiliza IA para monitorar suas movimentações, e
            oferecer insights personalizados, facilitando o controle
            do seu orçamento.</p>
-          <button className='btn btn-dark p-2 d-flex justify-content-center gap-3'>
+          <Button
+            onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+            className='btn btn-dark p-2 d-flex justify-content-center gap-3'>
             <i className="bi bi-google"></i>
             Entrar com Google
-          </button>
+          </Button>
 
       </section>
   )

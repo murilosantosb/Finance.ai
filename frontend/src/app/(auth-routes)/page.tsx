@@ -1,6 +1,6 @@
 
 // Components
-import Login from "@/components/login/Login";
+import Login from "@/components/Login";
 import Image from "next/image";
 import { Container } from "react-bootstrap"
 

@@ -1,0 +1,28 @@
+@import "globals.scss";
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    width: 100%;
+    border-bottom: 2px solid $bg-secondary;
+}
+
+.nav-link {
+    color: $gray; 
+    font-weight: 500;
+    font-size: 16px; 
+  
+    &:hover {
+      color: $light-gray; 
+    }
+
+    &:focus {
+      color: $green;
+    }
+  }
+
+.nav-link-active {
+  color: $green;
+}
+  
