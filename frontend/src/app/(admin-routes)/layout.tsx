@@ -10,39 +10,53 @@ import NavBar from "@/components/NavBar";
 // hooks
 import userStore from "@/store/userStore";
 import { useRouter } from "next/navigation";
+//API
+import apiRequest from "@/utils/apiRequest";
 
 interface PrivateLayoutProps {
 	children: React.ReactNode;
 }
 
 export default function PrivateLayout({ children }: PrivateLayoutProps){
-	const session = useSession();
+	const { status, data } = useSession();
     const router = useRouter();
     const login = userStore((state) => state.login);
 
-    useEffect(() => {
-        if(session.status === "unauthenticated") {
-            router.push("/")
-        } else if(session.status === "authenticated") {
-            login({
-                name: session.data?.user?.name || "",
-                email: session?.data?.user?.email || "",
-                image: session?.data?.user?.image || "",
-            })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const sendUserDataToBackend = async () => {
+        if(status === "authenticated" && data?.user) {
+            try {
+               await apiRequest(
+                    {
+                        endpoint:"/users/login",
+                        method: "POST",
+                        body:{
+                            name: data.user.name || "",
+                            email: data?.user.email || "",
+                            image: data?.user.image || "",
+                            googleId: data.user.googleId || null ,
+                        },
+                    });
+            } catch (error) {
+                console.error("Erro ao enviar os dados do usuário", error)
+            }
         }
-    }, [session.status, router, login, session]);
-    
-
-
-
-    if(session.status === "loading") {
-        return (
-        <div className="spinner-grow text-primary d-flex align-items-center justify-content-center" role="status">
-         <span className="visually-hidden">Loading...</span>
-        </div>
-        )
     }
 
+    useEffect(() => {
+            if(status === "unauthenticated") {
+                router.push("/")
+            } else if(status === "authenticated" && data.user) {
+                login({
+                    name: data?.user?.name || "",
+                    email: data?.user?.email || "",
+                    image: data?.user?.image || "",
+                })
+
+                sendUserDataToBackend()
+            }
+
+    }, [status, data, login, router, sendUserDataToBackend]);
 
 	return( 
     <>

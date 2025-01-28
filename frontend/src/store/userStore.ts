@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { userProps } from "@/interfaces/user"
+import { userProps } from "@/interfaces/userType"
 
 
 interface UserState {
@@ -12,6 +12,8 @@ const userStore = create<UserState>((set) => ({
         name: "",
         email: "",
         image: "",
+        id: "",
+        googleId: {},
     },
 
     login: (newUser) => set((state) => ({

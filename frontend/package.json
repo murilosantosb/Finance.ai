@@ -24,6 +24,7 @@
     "eslint-config-next": "15.1.5",
     "next-auth": "^4.24.11",
     "react-bootstrap": "^2.10.8",
+    "react-bootstrap-icons": "^1.11.5",
     "sass": "^1.83.4",
     "typescript": "^5",
     "zod": "^3.24.1",

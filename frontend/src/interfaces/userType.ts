@@ -4,5 +4,7 @@ export interface userProps{
         name: string | null | undefined,
         email: string | null | undefined,
         image: string | null | undefined | StaticImport,
+        id?: string | undefined,
+        googleId?: object | null;
 }
     

@@ -1,7 +1,6 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 
-
 const handler = NextAuth({
     pages: {
         signIn: "/"
@@ -18,7 +17,22 @@ const handler = NextAuth({
                 }
             }
         })
-    ]
+    ],
+    callbacks: {
+        async jwt({ token, account }) {
+            if(account && account.provider === "google") {
+                token.googleId = account.id_token || null;
+            }
+            return token;
+        },
+        async session({ session, token }) {
+            session.user.googleId = token.googleId || null;
+            console.log("Sessão do usuário", session)
+            return session;
+        }
+    }
+
 })
 
 export { handler as GET, handler as POST }
+

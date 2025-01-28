@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import { ZodSchema, ZodError, ZodType } from 'zod';
+import { ZodError, ZodSchema, ZodType } from 'zod';
 
-export const validateDataSchema = (schema: ZodType) => {
+export const validateDataSchema = (schema: ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.safeParse(req.body); 
+      schema.parse(req.body); 
+      console.log("Dados recebidos para validação:", req.body);
       next();
     } catch (error) {
       if (error instanceof ZodError) {

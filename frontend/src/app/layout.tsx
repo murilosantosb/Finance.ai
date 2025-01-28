@@ -7,6 +7,8 @@ import "../styles/login.scss";
 import "../styles/navbar.scss";
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { AuthProvider } from "@/components/AuthoProvider";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${geistSans.variable} ${geistMono.variable} body`}>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          <Suspense fallback={<Loading />}>
+            <AuthProvider>
+              {children}
+            </AuthProvider>
+          </Suspense>
       </body>
     </html>
   );

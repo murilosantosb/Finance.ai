@@ -1,11 +1,16 @@
 "use client";
 
 import React from 'react';
+//Next
 import Image from 'next/image';
+//Bootstrap
 import { Button } from 'react-bootstrap';
+//NextAuth
 import { signIn } from "next-auth/react";
 
+
 const Login = () => {
+
   return (
       <section className='login'>
           <span className='brand'>

@@ -12,4 +12,4 @@ const conn = async () => {
     return dbConn;
 }
 
-export default conn
+export default conn;

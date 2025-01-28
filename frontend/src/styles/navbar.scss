@@ -2,10 +2,17 @@
 
 .navbar-container {
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     padding: 15px 25px;
     width: 100%;
     border-bottom: 2px solid $bg-secondary;
+    margin: auto 0px;
+
+    @media (max-width: 767px) {
+      display: grid;
+      grid-template-columns: 1fr 100px;
+
+    }
 }
 
 .nav-link {
