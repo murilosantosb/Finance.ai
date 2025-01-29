@@ -1,11 +1,14 @@
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+// SCSS
 import "../styles/globals.scss";
 import "../styles/custom.scss";
 import "../styles/login.scss";
 import "../styles/navbar.scss";
+import "../styles/dashboard.scss";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import { AuthProvider } from "@/components/AuthoProvider";
 import { Suspense } from "react";
 import Loading from "./loading";
@@ -33,11 +36,11 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${geistSans.variable} ${geistMono.variable} body`}>
-          <Suspense fallback={<Loading />}>
-            <AuthProvider>
-              {children}
-            </AuthProvider>
-          </Suspense>
+           <Suspense fallback={<Loading />}>
+              <AuthProvider>
+                {children}
+              </AuthProvider>
+           </Suspense>
       </body>
     </html>
   );

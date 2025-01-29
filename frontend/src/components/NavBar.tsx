@@ -63,30 +63,3 @@ const NavBar = () => {
 }
 
 export default NavBar
-
-
-/* 
-  <Navbar bg="transparent" data-bs-theme="dark">
-        <nav className='navbar-container'>
-          <Navbar.Brand className='d-flex align-items-center gap-3'>
-            <Image src="/images/favicon.png" width={32} height={30} alt='logo'/>
-            <Link href="/dashboard" className='h2 text-decoration-none'>finance.ai</Link>
-          </Navbar.Brand>
-          <Nav className="me-auto mx-5">
-               {navLinks.map(({ href, label }) => (
-                <Link 
-                  key={href}
-                  href={href}
-                  className={`${
-                    pathname === href ? "nav-link-active" : ""
-                  } nav-link`}
-                >
-                  {label}
-                </Link>
-               ))}
-          </Nav>
-
-          <OffcanvasPanel />
-        </nav>
-      </Navbar>
-*/

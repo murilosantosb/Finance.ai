@@ -1,0 +1,128 @@
+@import "globals.scss";
+
+@mixin card-info($width, $heigth, $border-radius, $padding) {
+    width: 100%;
+    height: $heigth;
+    border-radius: $border-radius;
+    padding: $padding;
+    border: 2px solid $dark-gray;
+    max-width: $width;
+} 
+
+@mixin bg-icons($bg, $color) {
+    background-color: $bg;
+    color: $color;
+    font-size: 20px;
+}
+
+%icon-style {
+    border-radius: 7px;
+    padding: 5px 10px;
+}
+
+.background-icon-primary {
+    @include bg-icons($bg-primary, white);
+    @extend %icon-style;
+}
+
+.background-icon-secondary {
+    @include bg-icons($dark-gray, white);
+    @extend %icon-style;
+}
+
+.background-icon-revenue {
+    @include bg-icons(#0f190c, $green);
+    @extend %icon-style;
+}
+
+.background-icon-expenses {
+    @include bg-icons(#1e0e10, $red);
+    @extend %icon-style;
+}
+
+.card-info-primary {
+    @include card-info(900px, 157px, 20px, 32px 24px);
+    background-color: $dark-green;
+    grid-column: span 3;
+
+    div > strong {
+        font-size: 2em;
+    }
+
+    @media(max-width: 500px) {
+        height: 250px;
+
+        div > strong {
+            font-size: 1.5em;
+        }
+    }
+}
+
+.card-info-secondary {
+    @include card-info(346px, 126px, 20px, 32px 24px);
+    background-color: $dark-green;
+    grid-column: span 1;
+}
+
+.card-info-tertialy {
+    @include card-info(252px, 126px, 20px, 32px 24px);
+    background-color: transparent;
+}
+
+.financial-info-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+
+    span.span-icon {
+        display: flex;
+        gap: 15px;
+    }
+
+    div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        strong {
+            letter-spacing: 3px;
+
+            i {
+                margin-left: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    p {
+        color: $gray;
+        font-weight: 600;
+    }
+
+    strong {
+        color: white;
+        font-size: 1.3em;
+    }
+}
+
+.financial-container {
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+    gap: 20px;
+    margin-top: 18px;
+
+    @media (max-width: 580px) {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+main.dashboard-container {
+   
+}

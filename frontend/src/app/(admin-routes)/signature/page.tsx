@@ -1,9 +1,10 @@
+import Wrapper from "@/components/Wrapper";
 
 export default function Signature() {
     return (
-     <div>
+     <Wrapper>
       <h1>Assinaturas</h1>
-     </div>
+     </Wrapper>
     );
   }
   
