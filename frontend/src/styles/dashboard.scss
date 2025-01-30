@@ -1,5 +1,7 @@
 @import "globals.scss";
 
+// FinancialInfoCard, Group and Icons
+
 @mixin card-info($width, $heigth, $border-radius, $padding) {
     width: 100%;
     height: $heigth;
@@ -17,8 +19,25 @@
 
 %icon-style {
     border-radius: 7px;
-    padding: 5px 10px;
+    padding: 2px 0px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+main.dashboard-container {
+   display: grid;
+//    grid-template-columns: 25% 31.5% 50% ;
+    grid-template-columns: 2fr 1fr auto;
+    grid-template-rows: 1fr;
+    justify-content: center;
+    align-items: center
+
+}
+
 
 .background-icon-primary {
     @include bg-icons($bg-primary, white);
@@ -30,15 +49,32 @@
     @extend %icon-style;
 }
 
-.background-icon-revenue {
+.background-icon-tertialy {
+    @include bg-icons($dark-green, $white);
+    @extend %icon-style;
+}   
+
+.background-icon-primary-revenue {
     @include bg-icons(#0f190c, $green);
     @extend %icon-style;
 }
 
-.background-icon-expenses {
+.background-icon-primary-expenses {
     @include bg-icons(#1e0e10, $red);
     @extend %icon-style;
 }
+
+.background-icon-secondary-revenue {
+    @include bg-icons($dark-green, $green);
+    @extend %icon-style;
+}
+
+.background-icon-secondary-expenses {
+    @include bg-icons($dark-green, $red);
+    @extend %icon-style;
+}   
+
+
 
 .card-info-primary {
     @include card-info(900px, 157px, 20px, 32px 24px);
@@ -88,7 +124,7 @@
         strong {
             letter-spacing: 3px;
 
-            i {
+            svg {
                 margin-left: 10px;
                 cursor: pointer;
             }
@@ -110,6 +146,7 @@
     display: grid;
     grid-template-columns: 3fr 2fr 2fr;
     grid-template-rows: 1fr 1fr;
+    // grid-column: span 2;
     align-items: center;
     width: 100%;
     max-width: 900px;
@@ -123,6 +160,109 @@
     }
 }
 
-main.dashboard-container {
-   
+
+.finance-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+
+    width: 100%;
+    max-width: 351px;
+    height: 464px;
+    padding: 24px 32px;
+    border: 2px solid $dark-gray;
+    border-radius: 15px;
+
+    p {
+        color: $gray;
+        margin-top: 10px;
+    }
+
+    strong {
+        color: white;
+    }
+
+    .finance-chart-content {
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        width: 100%;
+        margin-top: 16px;
+        gap: 12px; 
+
+        div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 8px;
+            border-radius: 8px;
+
+            span {
+                display: flex;
+                align-items: center;
+                gap: 8px; 
+            }
+
+            strong {
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.chart-content {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 220px;
+    height: 220px;
+    cursor: pointer;
+}
+
+// Expense Category Progress
+
+section.expense-category-container {
+    padding: 24px;
+    width: 100%;
+    height: 464px;
+    max-width: 530px;
+    border: 2px solid $dark-gray;
+    border-radius: 15px;
+
+    h1 {
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        border-bottom: 2px solid $dark-gray;
+        padding-bottom: 10px;
+    }
+
+    section.expense-category-content {
+
+        div {
+            span {
+                display: flex;
+                justify-content: space-between;
+                color: white;
+                font-size: 16px;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+
+// Transaction Month Selector
+
+section.transaction-month-selelector-container {
+    max-width: 600px;
+    width: 100%;
+    height: 804px;
+    border: 2px solid $dark-gray;
+    border-radius: 15px;
+    grid-column: span 2;
+    grid-row: span 2;
 }

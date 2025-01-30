@@ -1,8 +1,14 @@
 "use client"
 
+//Components
 import FinancialSummaryGroup from "@/components/Cards/FinancialSummaryGroup";
 import Wrapper from "@/components/Wrapper";
-import {FileText} from 'react-bootstrap-icons'
+import FinanceChart from "@/components/Cards/FinanceChart";
+import ExpenseCategoryProgress from "@/components/Cards/ExpenseCategoryProgress";
+import TransactionMonthSelector from "@/components/Cards/TransactionMonthSelector";
+
+//Icons
+import { FiFileText } from "react-icons/fi";
 
 export default function Dashboard() {
 
@@ -14,15 +20,20 @@ export default function Dashboard() {
         <button className="btn btn-outline-light align-self-center text-center">
           Relatório IA
           {/* <i className="bi bi-file-text"></i> */}
-          <FileText size={20}/>
+          <FiFileText size={20}/>
         </button>
-        <button className=" btn btn-outline-light m-2">Novembro</button>  
+        <button className="btn btn-outline-light m-2">Novembro</button>  
       </span> 
     </header>
     <main className="dashboard-container">
         <FinancialSummaryGroup />
+        <TransactionMonthSelector />
+        <div className="d-flex gap-3">
+          <FinanceChart />
+          <ExpenseCategoryProgress />
+        </div>
     </main>
   </Wrapper>
     );
-  }
+}
   

@@ -9,6 +9,8 @@ import { signOut } from "next-auth/react"
 
 // Components
 import { Button, Offcanvas } from "react-bootstrap"
+import { CiLogout } from "react-icons/ci";
+
 
 interface OffcanvasPanelProps {
     user?: string;
@@ -52,7 +54,7 @@ const OffcanvasPanel: React.FC<OffcanvasPanelProps> = () => {
                 className='text-white fw-bold d-flex align-items-center gap-2'
                 onClick={() => signOut()}
               >
-                <i className="bi bi-box-arrow-left"></i>
+                <CiLogout />
                 Logout
             </Button>
             </Offcanvas.Body>

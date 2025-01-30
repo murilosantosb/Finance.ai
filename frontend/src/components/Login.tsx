@@ -7,7 +7,8 @@ import Image from 'next/image';
 import { Button } from 'react-bootstrap';
 //NextAuth
 import { signIn } from "next-auth/react";
-
+//Icon
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
 
@@ -32,7 +33,7 @@ const Login = () => {
           <Button
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
             className='btn btn-dark p-2 d-flex justify-content-center gap-3'>
-            <i className="bi bi-google"></i>
+            <FcGoogle />
             Entrar com Google
           </Button>
 

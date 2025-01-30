@@ -9,7 +9,7 @@ import { Nav, Navbar } from 'react-bootstrap';
 import OffcanvasPanel from './Modal/OffcanvasPanel';
 
 // Icons
-import { List } from "react-bootstrap-icons"
+import { IoMenuSharp } from "react-icons/io5";
 
 // Next
 import Link from 'next/link';
@@ -37,7 +37,7 @@ const NavBar = () => {
 
       {/* Navbar Toggle Button */}
       <Navbar.Toggle aria-controls="basic-navbar-nav">
-        <List size={30} />
+        <IoMenuSharp size={30}/>
       </Navbar.Toggle>
 
       {/* Collapsible Menu */}

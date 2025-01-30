@@ -13,8 +13,8 @@ const FinancialSummaryGroup: React.FC<FinancialSummaryGroupProps> = () => {
         variant='primary'
         title='Saldo'
         amount={2700}
-        icon='bi bi-wallet'
-        iconOptional='bi bi-eye'
+        icon='wallet'
+        iconOptional='eye'
         background_icons='background-icon-primary'
         button=
         {
@@ -24,9 +24,9 @@ const FinancialSummaryGroup: React.FC<FinancialSummaryGroupProps> = () => {
           </Button>
         }
            />
-      <FinancialInfoCard variant='secondary' title='Investido' amount={3500} icon='bi bi-piggy-bank' background_icons='background-icon-secondary'/>
-      <FinancialInfoCard variant='tertialy' icon='bi bi-graph-up-arrow' title='Receita' amount={8150} background_icons='background-icon-revenue'/>
-      <FinancialInfoCard variant='tertialy' icon='bi bi-graph-down-arrow' title='Despesas' amount={2950} background_icons='background-icon-expenses'/>
+      <FinancialInfoCard variant='secondary' title='Investido' amount={3500} icon='piggy_bank' background_icons='background-icon-secondary'/>
+      <FinancialInfoCard variant='tertialy' icon='graph_up_arrow' title='Receita' amount={8150} background_icons='background-icon-primary-revenue'/>
+      <FinancialInfoCard variant='tertialy' icon='graph_down_arrow' title='Despesas' amount={2950} background_icons='background-icon-primary-expenses'/>
     </section>
   )
 }

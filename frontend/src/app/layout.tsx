@@ -7,7 +7,6 @@ import "../styles/custom.scss";
 import "../styles/login.scss";
 import "../styles/navbar.scss";
 import "../styles/dashboard.scss";
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { AuthProvider } from "@/components/AuthoProvider";
 import { Suspense } from "react";
