@@ -1,4 +1,9 @@
+"use client"
+
 import React from 'react'
+//Componentes
+import { Button } from 'react-bootstrap';
+import TransactionItem from './TransactionItem';
 
 interface TransactionMonthSelectorProps {
     title?: string;
@@ -7,7 +12,25 @@ interface TransactionMonthSelectorProps {
 const TransactionMonthSelector: React.FC<TransactionMonthSelectorProps> = () => {
   return (
     <section className='transaction-month-selelector-container'>
-        <h1 className='text-white'>Olá</h1>
+        <header className='transaction-month-header'>
+          <h1 className='text-white'>Transações</h1>
+          <Button variant='dark'>Ver mais</Button>
+        </header>
+
+        <section>
+            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
+            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
+            <TransactionItem title='Aluguel' payment_method='BILLET' financial_category='SPENT' date='15/11/2024' amount={800}/>
+            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
+            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
+            <TransactionItem title='Aluguel' payment_method='BILLET' financial_category='SPENT' date='15/11/2024' amount={800}/>
+            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
+            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
+            <TransactionItem title='Aluguel' payment_method='BILLET' financial_category='SPENT' date='15/11/2024' amount={800}/>
+            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
+            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
+        </section>
+
     </section>
   )
 }

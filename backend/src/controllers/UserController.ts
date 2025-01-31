@@ -10,8 +10,6 @@ export async function login(req: Request, res: Response): Promise<void> {
   try {
     const { name, email, image, googleId } = req.body;
 
-    console.log("Dados recebidos no login", { name, email, image, googleId })
-
     // Buscar usuário pelo email
     let user = await UserModel.findOne({ email });
     if(user) {
@@ -19,8 +17,6 @@ export async function login(req: Request, res: Response): Promise<void> {
       res.status(200).json({ message: "Usuário já logado", user })
       return;
     }
-
-    
       // Criar novo usuário se não encontrado
       user = await UserModel.create({
         name,
@@ -28,8 +24,6 @@ export async function login(req: Request, res: Response): Promise<void> {
         image,
         googleId,
       });
-
-      console.log("Novo usuário criado:", user)
 
       res.status(201).json({ message: "Usuário criando com sucesso", user })
   } catch (error) {

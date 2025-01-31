@@ -41,7 +41,7 @@ export const options = {
     cutout: "85%",
     elements: {
       arc: {
-        borderWidth: 2,
+        borderWidth: 0,
       },
     },
 };

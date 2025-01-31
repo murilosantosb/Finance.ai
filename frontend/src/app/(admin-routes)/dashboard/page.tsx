@@ -28,7 +28,7 @@ export default function Dashboard() {
     <main className="dashboard-container">
         <FinancialSummaryGroup />
         <TransactionMonthSelector />
-        <div className="d-flex gap-3">
+        <div className="dashboard-graphics">
           <FinanceChart />
           <ExpenseCategoryProgress />
         </div>
