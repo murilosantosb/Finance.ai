@@ -16,7 +16,7 @@ export default function Dashboard() {
     return (
   <Wrapper>
     <header className="d-flex justify-content-between align-items-center">
-      <h1 className="h3  text-white">Dashboard</h1>
+      <h1 className="h3 text-white">Dashboard</h1>
       <span className="d-flex align-items-center gap-2">
       <BaseModal
          button_title={<>Relatório IA <FiFileText /></>}

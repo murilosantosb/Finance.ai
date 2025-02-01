@@ -4,6 +4,7 @@ import React from 'react'
 //Componentes
 import { Button } from 'react-bootstrap';
 import TransactionItem from './TransactionItem';
+import Link from 'next/link';
 
 interface TransactionMonthSelectorProps {
     title?: string;
@@ -14,7 +15,9 @@ const TransactionMonthSelector: React.FC<TransactionMonthSelectorProps> = () => 
     <section className='transaction-month-selelector-container'>
         <header className='transaction-month-header'>
           <h1 className='text-white'>Transações</h1>
-          <Button variant='dark'>Ver mais</Button>
+            <Link href="/transaction" className='btn btn-secondary'>
+              Ver mais
+            </Link>
         </header>
 
         <section>

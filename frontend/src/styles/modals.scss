@@ -5,7 +5,7 @@
 
 .modal-container {
     width: 100%;
-    max-width: 550px;
+    max-width: 400px;
     height: auto;
     max-height: 80vh; 
     border: none;
@@ -13,7 +13,7 @@
     // overflow: hidden;
     
     section {
-        padding: 20px;
+        padding: 5px 20px 5px 20px;
     }
 
     .modal-header .btn-close {
@@ -51,4 +51,66 @@
     display: flex;
     align-items: center;
     gap: 5px;
+}
+
+
+// Add Transaction Modal
+
+.modal-header-add-transaction {
+    display: flex;
+    flex-direction: column;
+
+
+    p {
+        color: $gray;
+        font-size: 18px;
+    }
+}
+
+.modal-body-add-transaction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    form.modal-form{
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        width: 350px;
+    }
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        width: 150px;
+        color: white;
+    }
+}
+
+
+
+.date-input-form {
+    display: flex;
+    flex-direction: column;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        border: 2px solid $dark-gray;
+        border-radius: 15px;
+        padding: 8px 10px;
+    }
+
+    .custom-datepicker {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: $light-gray;
+        cursor: pointer;
+    }
 }

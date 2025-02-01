@@ -1,13 +1,21 @@
 @import "globals.scss";
 
 $primary: $green;
-$secondary: $bg-secondary;
-$info: $gray;
-$modal-content-bg: $dark-gray; 
+$secondary: $dark-gray;
+$info: $gray; 
+$modal-content-bg: $bg-secondary; 
 $modal-content-color: #FFFFFF;
 $modal-header-border-color: none;
 $modal-body-border-color: none;
 $modal-footer-border-color: none;
 $modal-content-border-radius: 20px;
+
+$input-bg: $bg-secondary;
+$input-border-color: $dark-gray;
+$input-border-radius: 15px;
+$input-color: $light-gray;
+$input-focus-border-color: $bg-primary;
+$input-placeholder-color: $gray;
+$input-border-width: 2px;
 
 @import "bootstrap/scss/bootstrap";

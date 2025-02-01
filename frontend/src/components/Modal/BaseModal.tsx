@@ -1,7 +1,10 @@
 "use client";
+
 import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap';
 import ModalOpenIA from './ModalOpenIA';
+import DeleteTransactionModal from './DeleteTransactionModal';
+import AddTransactionModal from './AddTransactionModal';
 
 interface BaseModalPropss {
   variant:
@@ -29,7 +32,16 @@ const BaseModal: React.FC<BaseModalPropss> = (props) => {
 
       <Modal dialogClassName='modal-container' centered show={show} onHide={handleClose}>
         <section>
-            <ModalOpenIA handleClose={handleClose}/>
+            {props.variant === "IA" ? (
+              <ModalOpenIA handleClose={handleClose}/> 
+            ) : props.variant === "create_transition" ? (
+              <AddTransactionModal handleClose={handleClose}/>
+            ) : props.variant === "modal_transition_delete" ? (
+              <DeleteTransactionModal variant='modal_delete' handleClose={handleClose}/> 
+            ) : (
+              <DeleteTransactionModal variant='modal_alert' handleClose={handleClose}/>
+            )
+            }
         </section>
       </Modal>
     </>
