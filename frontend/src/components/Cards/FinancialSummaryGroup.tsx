@@ -1,6 +1,7 @@
 import React from 'react'
 import FinancialInfoCard from './FinancialInfoCard'
 import { Button } from 'react-bootstrap'
+import { LuArrowUpDown } from "react-icons/lu";
 
 type FinancialSummaryGroupProps = {
     title?: string
@@ -20,7 +21,7 @@ const FinancialSummaryGroup: React.FC<FinancialSummaryGroupProps> = () => {
         {
           <Button className='text-white d-flex align-items-center gap-2 h-75 rounded-5'>
             Adicionar Transação
-            <i className="bi bi-arrow-down-up"></i>
+            <LuArrowUpDown />
           </Button>
         }
            />

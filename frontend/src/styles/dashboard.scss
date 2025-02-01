@@ -319,7 +319,8 @@ section.transaction-month-selelector-container {
     }
 
     section {
-        flex-direction: column;
+        margin-left: -32px;
+        
     }
 
     @media (min-width: 1400px) {
@@ -331,36 +332,35 @@ ul.transaction-list {
     display: flex;
     width: 100%;
     list-style-type: none;
+    cursor: pointer;
     
     li {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-
         div {
             display: flex;
             align-items: center;
             gap: 15px;
-
             span {
                 display: flex;
                 flex-direction: column;
-
                 strong {
                     color: white;
                     font-weight: bold;
                 }
-
                 time {
                     color: $gray;
                     font-weight: 500;
                 }
             }
         }
-
         span {
             font-weight: bold;
         }
+    }
+    li:hover {
+        background-color: $dark-gray;
     }
 }

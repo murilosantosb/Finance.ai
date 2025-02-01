@@ -7,6 +7,7 @@ import "../styles/custom.scss";
 import "../styles/login.scss";
 import "../styles/navbar.scss";
 import "../styles/dashboard.scss";
+import "../styles/modals.scss";
 
 import { AuthProvider } from "@/components/AuthoProvider";
 import { Suspense } from "react";

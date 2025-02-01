@@ -3,5 +3,11 @@
 $primary: $green;
 $secondary: $bg-secondary;
 $info: $gray;
+$modal-content-bg: $dark-gray; 
+$modal-content-color: #FFFFFF;
+$modal-header-border-color: none;
+$modal-body-border-color: none;
+$modal-footer-border-color: none;
+$modal-content-border-radius: 20px;
 
 @import "bootstrap/scss/bootstrap";
