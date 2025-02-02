@@ -10,8 +10,6 @@ import "../styles/dashboard.scss";
 import "../styles/modals.scss";
 
 import { AuthProvider } from "@/components/AuthoProvider";
-import { Suspense } from "react";
-import Loading from "./loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +24,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Finance AI",
   description: "Gerencie suas finanças com eficiência",
+  icons: {
+    icon: "./favicon.ico"
+  }
 };
 
 export default function RootLayout({
@@ -36,11 +37,9 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={`${geistSans.variable} ${geistMono.variable} body`}>
-           <Suspense fallback={<Loading />}>
               <AuthProvider>
                 {children}
               </AuthProvider>
-           </Suspense>
       </body>
     </html>
   );

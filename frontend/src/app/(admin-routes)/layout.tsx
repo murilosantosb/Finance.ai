@@ -10,8 +10,7 @@ import NavBar from "@/components/NavBar";
 // hooks
 import userStore from "@/store/userStore";
 import { useRouter } from "next/navigation";
-//API
-import apiRequest from "@/utils/apiRequest";
+import { useFetch } from "@/hooks/useFetch";
 
 interface PrivateLayoutProps {
 	children: React.ReactNode;
@@ -22,30 +21,29 @@ export default function PrivateLayout({ children }: PrivateLayoutProps){
     const router = useRouter();
     const login = userStore((state) => state.login);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const sendUserDataToBackend = async () => {
-        if(status === "authenticated" && data?.user) {
-            try {
-               await apiRequest(
-                    {
-                        endpoint:"/users/login",
-                        method: "POST",
-                        body:{
-                            name: data.user.name || "",
-                            email: data?.user.email || "",
-                            image: data?.user.image || "",
-                            googleId: data.user.googleId || null,
-                            balance: data?.user?.balance || 0,
-                            investment: data?.user?.investment || 0,
-                            revenue: data?.user?.revenue || 0,
-                            expenses: data.user?.expenses || 0,
-                        },
-                    });
-            } catch (error) {
-                console.error("Erro ao enviar os dados do usuário", error)
-            }
+    const { refetch } = useFetch({
+        endpoint:"/users/login",
+        method: "POST",
+        body: data?.user
+        ? {
+            name: data?.user.name || "",
+            email: data?.user.email || "",
+            image: data?.user.image || "",
+            googleId: data?.user.googleId || null,
+            balance: data?.user?.balance || 0,
+            investment: data?.user?.investment || 0,
+            revenue: data?.user?.revenue || 0,
+            expenses: data?.user?.expenses || 0,
         }
-    }
+        : null,
+       autoFetch: false, 
+    })
+
+    // const { data: userData } = useFetch({
+    //     endpoint: "/users/",
+    //     method: "GET",
+    //     autoFetch: false,
+    // })
 
     useEffect(() => {
             if(status === "unauthenticated") {
@@ -56,16 +54,11 @@ export default function PrivateLayout({ children }: PrivateLayoutProps){
                     name: data?.user?.name || "",
                     email: data?.user?.email || "",
                     image: data?.user?.image || "",
-                    balance: data?.user?.balance || 0,
-                    investment: data?.user?.investment || 0,
-                    revenue: data?.user?.revenue || 0,
-                    expenses: data.user?.expenses || 0,
                 })
 
-                sendUserDataToBackend()
+                refetch();
             }
-
-    }, [status, data, login, router, sendUserDataToBackend]);
+    }, [status, data, login, router, refetch]);
 
 	return( 
     <>

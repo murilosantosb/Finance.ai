@@ -14,15 +14,11 @@ const userStore = create<UserState>((set) => ({
         image: "",
         id: "",
         googleId: {},
-        balance: 0,
-        investment: 0,
-        revenue: 0,
-        expenses: 0,
     },
 
     login: (newUser) => set((state) => ({
         user: { ...state.user, ...newUser }
-    }))
+    })),
 }))
 
 export default userStore;

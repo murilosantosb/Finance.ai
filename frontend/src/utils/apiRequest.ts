@@ -1,13 +1,8 @@
 
 
-interface apiRequestProps {
-    endpoint: string;
-    method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    body?: any;
-}
+import { apiRequestProps } from "@/interfaces/apiType";
 
-async function apiRequest({ endpoint, method, body }: apiRequestProps) {
+async function apiRequest({ endpoint, method, body, autoFetch = true }: apiRequestProps) {
     const baseUrl = "http://localhost:5000/api";
     const url = `${baseUrl}${endpoint}`;
 
@@ -23,6 +18,7 @@ async function apiRequest({ endpoint, method, body }: apiRequestProps) {
     }
 
     try {
+        if(autoFetch) {
         const responseData = await fetch(url, options);
 
         if(!responseData.ok) {
@@ -30,6 +26,7 @@ async function apiRequest({ endpoint, method, body }: apiRequestProps) {
             throw new Error(`Erro ${responseData.status}: ${errorMessage}`);
         }
         return await responseData.json();
+    }
     } catch (error) {
         console.log("Erro ao fazer a requsição:", error);
     }

@@ -7,49 +7,27 @@ import { LuArrowUpDown } from "react-icons/lu";
 import BaseModal from '../Modal/BaseModal';
 
 // Hooks
-import { useState, useEffect } from 'react';
-import userStore from '@/store/userStore';
-// API
-import apiRequest from '@/utils/apiRequest';
+// import { use } from 'react';
+import financeStore from '@/store/financeStore';
+// import { useFetch } from '@/hooks/useFetch';
+
 //Types
-import { userProps } from '@/interfaces/userType';
+// import { userProps } from '@/interfaces/userType';
 
-type FinancialSummaryGroupProps = {
-    title?: string
-}
+//Libs
+import realToCents from '@/utils/realToCents';
 
-const FinancialSummaryGroup: React.FC<FinancialSummaryGroupProps> = () => {
-  const [userData, setUserData] = useState<userProps>()
-
-  const id = userStore((state) => state.user.id)
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-       const data = await apiRequest({
-          endpoint: `/users/${id}`,
-          method: "GET"
-        })
-        
-        if(!data){
-          throw new Error("Usuário não encontrado!")
-        }
+const FinancialSummaryGroup: React.FC = () => {
   
-        return setUserData(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchUserData() 
-  }, [userData, setUserData, id])
 
+  const { balance, expenses, investment, revenue} = financeStore((state) => state.userFinance);
 
   return (
     <section className='financial-container'>
       <FinancialInfoCard
         variant='primary'
         title='Saldo'
-        amount={2700}
+        amount={realToCents({variant: "cents_to_real", money: balance})}
         icon='wallet'
         iconOptional='eye'
         background_icons='background-icon-primary'
@@ -67,17 +45,30 @@ const FinancialSummaryGroup: React.FC<FinancialSummaryGroupProps> = () => {
           />
         }
            />
-      <FinancialInfoCard variant='secondary' title='Investido' amount={3500} icon='piggy_bank' background_icons='background-icon-secondary'/>
-      <FinancialInfoCard variant='tertialy' icon='graph_up_arrow' title='Receita' amount={8150} background_icons='background-icon-primary-revenue'/>
-      <FinancialInfoCard variant='tertialy' icon='graph_down_arrow' title='Despesas' amount={2950} background_icons='background-icon-primary-expenses'/>
+      <FinancialInfoCard
+        variant='secondary'
+        title='Investido'
+        amount={realToCents({variant:"cents_to_real", money: investment})}
+        icon='piggy_bank'
+        background_icons='background-icon-secondary'
+      />
+      <FinancialInfoCard
+        variant='tertialy'
+        icon='graph_up_arrow'
+        title='Receita'
+        amount={realToCents({variant:"cents_to_real", money: revenue})}
+        background_icons='background-icon-primary-revenue'
+      />
+      <FinancialInfoCard
+        variant='tertialy'
+        icon='graph_down_arrow'
+        title='Despesas'
+        amount={realToCents({variant:"cents_to_real", money: expenses})}
+        background_icons='background-icon-primary-expenses'
+      />
     </section>
   )
 }
 
 export default FinancialSummaryGroup;
 
-/*
-<Button className=''>
-            
-          </Button>
-*/
