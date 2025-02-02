@@ -31,9 +31,10 @@ const Login = () => {
            oferecer insights personalizados, facilitando o controle
            do seu orçamento.</p>
           <Button
+            variant='secondary'
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            className='btn btn-dark p-2 d-flex justify-content-center gap-3'>
-            <FcGoogle />
+            className='login-button'>
+            <FcGoogle size={25}/>
             Entrar com Google
           </Button>
 

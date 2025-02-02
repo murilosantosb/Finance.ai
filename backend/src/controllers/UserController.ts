@@ -8,7 +8,7 @@ import { Request, Response } from "express";
 
 export async function login(req: Request, res: Response): Promise<void> {
   try {
-    const { name, email, image, googleId } = req.body;
+    const { name, email, image, googleId, balance, investment, revenue, expenses } = req.body;
 
     // Buscar usuário pelo email
     let user = await UserModel.findOne({ email });
@@ -23,6 +23,10 @@ export async function login(req: Request, res: Response): Promise<void> {
         email,
         image,
         googleId,
+        balance,
+        investment,
+        revenue,
+        expenses,
       });
 
       res.status(201).json({ message: "Usuário criando com sucesso", user })

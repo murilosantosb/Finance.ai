@@ -4,7 +4,10 @@ export interface userProps{
         name: string | null | undefined,
         email: string | null | undefined,
         image: string | null | undefined | StaticImport,
-        id?: string | undefined,
+        id: string,
         googleId?: object | null;
+        balance: number,
+        investment: number,
+        revenue: number,
+        expenses: number,
 }
-    

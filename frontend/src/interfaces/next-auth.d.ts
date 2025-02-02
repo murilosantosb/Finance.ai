@@ -9,6 +9,10 @@ declare module "next-auth" {
             image: string;
             googleId: object | null,
             id: string | undefined;
+            balance: number,
+            investment: number,
+            revenue: number,
+            expenses: number,
         };
     }
 

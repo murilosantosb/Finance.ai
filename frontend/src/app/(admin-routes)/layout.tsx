@@ -34,7 +34,11 @@ export default function PrivateLayout({ children }: PrivateLayoutProps){
                             name: data.user.name || "",
                             email: data?.user.email || "",
                             image: data?.user.image || "",
-                            googleId: data.user.googleId || null ,
+                            googleId: data.user.googleId || null,
+                            balance: data?.user?.balance || 0,
+                            investment: data?.user?.investment || 0,
+                            revenue: data?.user?.revenue || 0,
+                            expenses: data.user?.expenses || 0,
                         },
                     });
             } catch (error) {
@@ -48,9 +52,14 @@ export default function PrivateLayout({ children }: PrivateLayoutProps){
                 router.push("/")
             } else if(status === "authenticated" && data.user) {
                 login({
+                    id: data?.user.id || "",
                     name: data?.user?.name || "",
                     email: data?.user?.email || "",
                     image: data?.user?.image || "",
+                    balance: data?.user?.balance || 0,
+                    investment: data?.user?.investment || 0,
+                    revenue: data?.user?.revenue || 0,
+                    expenses: data.user?.expenses || 0,
                 })
 
                 sendUserDataToBackend()

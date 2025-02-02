@@ -21,6 +21,14 @@
       color: $gray;
       font-size: 1rem;
     }
+
+    button.login-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      padding: 7px;
+    }
   
     @media (min-width: 1400px) {
       width: 500px;

@@ -1,14 +1,49 @@
+"use client";
+
 import React from 'react'
+//Componentes
 import FinancialInfoCard from './FinancialInfoCard'
-import { Button } from 'react-bootstrap'
 import { LuArrowUpDown } from "react-icons/lu";
 import BaseModal from '../Modal/BaseModal';
+
+// Hooks
+import { useState, useEffect } from 'react';
+import userStore from '@/store/userStore';
+// API
+import apiRequest from '@/utils/apiRequest';
+//Types
+import { userProps } from '@/interfaces/userType';
 
 type FinancialSummaryGroupProps = {
     title?: string
 }
 
 const FinancialSummaryGroup: React.FC<FinancialSummaryGroupProps> = () => {
+  const [userData, setUserData] = useState<userProps>()
+
+  const id = userStore((state) => state.user.id)
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+       const data = await apiRequest({
+          endpoint: `/users/${id}`,
+          method: "GET"
+        })
+        
+        if(!data){
+          throw new Error("Usuário não encontrado!")
+        }
+  
+        return setUserData(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchUserData() 
+  }, [userData, setUserData, id])
+
+
   return (
     <section className='financial-container'>
       <FinancialInfoCard

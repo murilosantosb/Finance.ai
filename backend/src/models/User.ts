@@ -5,6 +5,10 @@ const userSchema = new Schema({
     email: {type: String, required: true, unique: true},
     image: {type: String},
     googleId: { type: String, default: null },
+    balance: { type: Number, default: 0.000 },
+    investment: { type: Number, default: 0.000 },
+    revenue: { type: Number, default: 0.000 },
+    expenses: { type: Number, default: 0.000 }
 },
 {
     timestamps: true
