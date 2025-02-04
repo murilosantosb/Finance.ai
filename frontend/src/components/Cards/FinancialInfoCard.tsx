@@ -6,7 +6,7 @@ import { BsFillEyeFill } from "react-icons/bs";
 
 type FinancialInfoCardProps = {
     title: string;
-    amount: string | number;
+    amount: number | string;
     icon: "wallet" | "piggy_bank" | "graph_up_arrow" | "graph_down_arrow" | "credit_card_fill" | "ticket" | "pix";
     variant: "primary" | "secondary" | "tertialy";
     background_icons: string;
@@ -26,7 +26,7 @@ const FinancialInfoCard: React.FC<FinancialInfoCardProps> = ({ title, amount, ic
 
          <div>
             <strong className='d-flex align-items-center gap-2'>
-                {amount && amount}
+                {amount}
                 {iconOptional && <BsFillEyeFill size={25}/>}
             </strong>
 

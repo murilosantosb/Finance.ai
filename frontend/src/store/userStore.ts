@@ -13,7 +13,7 @@ const userStore = create<UserState>((set) => ({
         email: "",
         image: "",
         id: "",
-        googleId: {},
+        googleId: "",
     },
 
     login: (newUser) => set((state) => ({

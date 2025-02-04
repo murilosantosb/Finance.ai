@@ -7,7 +7,7 @@ declare module "next-auth" {
             name: string;
             email: string;
             image: string;
-            googleId: object | null,
+            googleId: string | null,
             id: string | undefined;
             balance: number,
             investment: number,

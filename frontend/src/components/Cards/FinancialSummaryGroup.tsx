@@ -20,14 +20,16 @@ import realToCents from '@/utils/realToCents';
 const FinancialSummaryGroup: React.FC = () => {
   
 
-  const { balance, expenses, investment, revenue} = financeStore((state) => state.userFinance);
+  const { userFinance } = financeStore((state) => state);
+  
+  
 
   return (
     <section className='financial-container'>
       <FinancialInfoCard
         variant='primary'
         title='Saldo'
-        amount={realToCents({variant: "cents_to_real", money: balance})}
+        amount={realToCents({variant: "cents_to_real", money: userFinance?.balance ?? 0})}
         icon='wallet'
         iconOptional='eye'
         background_icons='background-icon-primary'
@@ -48,7 +50,7 @@ const FinancialSummaryGroup: React.FC = () => {
       <FinancialInfoCard
         variant='secondary'
         title='Investido'
-        amount={realToCents({variant:"cents_to_real", money: investment})}
+        amount={realToCents({variant:"cents_to_real", money: userFinance?.investment ?? 0})}
         icon='piggy_bank'
         background_icons='background-icon-secondary'
       />
@@ -56,14 +58,14 @@ const FinancialSummaryGroup: React.FC = () => {
         variant='tertialy'
         icon='graph_up_arrow'
         title='Receita'
-        amount={realToCents({variant:"cents_to_real", money: revenue})}
+        amount={realToCents({variant:"cents_to_real", money: userFinance?.revenue ?? 0})}
         background_icons='background-icon-primary-revenue'
       />
       <FinancialInfoCard
         variant='tertialy'
         icon='graph_down_arrow'
         title='Despesas'
-        amount={realToCents({variant:"cents_to_real", money: expenses})}
+        amount={realToCents({variant:"cents_to_real", money: userFinance?.expenses ?? 0})}
         background_icons='background-icon-primary-expenses'
       />
     </section>

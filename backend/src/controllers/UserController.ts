@@ -41,18 +41,42 @@ export async function login(req: Request, res: Response): Promise<void> {
 
 export async function getUserById(req: Request, res: Response): Promise<void> {
   try {
-    const { id: _id } = req.params;
+    const { googleId } = req.params;
 
-    // Buscar usuário pelo ID
-    const user = await UserModel.findById(_id);
+    // Buscar usuário pelo email
+    const user = await UserModel.findOne({ googleId });
 
     if (!user) {
-       res.status(404).json({ errors: "Usuário não encontrado!" });
+        res.status(404).json({ errors: ["Usuário não encontrado!"] });
+        return;
     }
 
      res.status(200).json({ user });
+     return;
   } catch (error) {
      console.error("Erro ao buscar usuário:", error);
      res.status(500).json({ errors: "Erro ao buscar usuário." });
+     return;
+  }
+}
+
+
+export async function accessUserFinancialData(req: Request, res: Response) {
+  try {
+      const { googleId } = req.params;
+
+      const user = await UserModel.findOne({ googleId }).select("balance investment revenue expenses")
+
+      if(!user) {
+          res.status(404).json({ errors: ["Usuário não encontrado!"] });
+          return;
+      }
+
+      res.status(200).json({ user });
+      return;
+  } catch (error) {
+      console.error("Erro ao buscar o usuário", error);
+      res.status(500).json({ errors: "Erro ao buscar o usuário" });
+      return;
   }
 }

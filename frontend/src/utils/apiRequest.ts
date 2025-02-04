@@ -2,7 +2,7 @@
 
 import { apiRequestProps } from "@/interfaces/apiType";
 
-async function apiRequest({ endpoint, method, body, autoFetch = true }: apiRequestProps) {
+async function apiRequest<T>({ endpoint, method, body, autoFetch = true }: apiRequestProps<T>) {
     const baseUrl = "http://localhost:5000/api";
     const url = `${baseUrl}${endpoint}`;
 
@@ -25,11 +25,13 @@ async function apiRequest({ endpoint, method, body, autoFetch = true }: apiReque
             const errorMessage = await responseData.text();
             throw new Error(`Erro ${responseData.status}: ${errorMessage}`);
         }
-        return await responseData.json();
+        return (await responseData.json()) as T;
     }
     } catch (error) {
         console.log("Erro ao fazer a requsição:", error);
     }
+
+    return null;
 }
 
 export default apiRequest;

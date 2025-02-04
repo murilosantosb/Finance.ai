@@ -9,8 +9,12 @@ import NavBar from "@/components/NavBar";
 
 // hooks
 import userStore from "@/store/userStore";
+import financeStore from "@/store/financeStore";
 import { useRouter } from "next/navigation";
 import { useFetch } from "@/hooks/useFetch";
+
+// Types
+import { UserFinance } from "@/interfaces/userType";
 
 interface PrivateLayoutProps {
 	children: React.ReactNode;
@@ -19,9 +23,10 @@ interface PrivateLayoutProps {
 export default function PrivateLayout({ children }: PrivateLayoutProps){
 	const { status, data } = useSession();
     const router = useRouter();
-    const login = userStore((state) => state.login);
+    const { login, user } = userStore((state) => state);
+    const { setUserFinance } = financeStore((state) => state)
 
-    const { refetch } = useFetch({
+    const { refetch: loginRefetch } = useFetch({
         endpoint:"/users/login",
         method: "POST",
         body: data?.user
@@ -39,26 +44,46 @@ export default function PrivateLayout({ children }: PrivateLayoutProps){
        autoFetch: false, 
     })
 
-    // const { data: userData } = useFetch({
-    //     endpoint: "/users/",
-    //     method: "GET",
-    //     autoFetch: false,
-    // })
+    const {data: userData, refetch: fetchFinance} = useFetch<UserFinance>({
+        endpoint: `/users/finance/${user.googleId}`,
+        method: "GET",
+        autoFetch: false,
+    })
 
     useEffect(() => {
             if(status === "unauthenticated") {
                 router.push("/")
-            } else if(status === "authenticated" && data.user) {
-                login({
-                    id: data?.user.id || "",
-                    name: data?.user?.name || "",
-                    email: data?.user?.email || "",
-                    image: data?.user?.image || "",
-                })
+            } else if(status === "authenticated" && data?.user) {
+                
+                if(!user.googleId && data?.user?.googleId) {
+                    login({
+                        id: data?.user.id || "",
+                        name: data?.user?.name || "",
+                        email: data?.user?.email || "",
+                        image: data?.user?.image || "",
+                        googleId: data?.user.googleId || null,
+                    })
+                }
 
-                refetch();
+                if(!userData && data?.user?.googleId) {
+                    fetchFinance().then((response) => {
+                        // console.log('Finance API Response:', response);
+                        if(response?.data) {
+                            setUserFinance(response.data);
+                        }else {
+                            console.error("Erro ao buscar dados financeiros:");
+                        }
+                    })
+                }
+
+                if(!user.googleId && data?.user?.googleId) {
+                    loginRefetch().then((response) => {
+                        console.log("Login response:", response)
+                    })
+                }
+                
             }
-    }, [status, data, login, router, refetch]);
+    }, [status, data?.user, login, router, fetchFinance, setUserFinance, userData, loginRefetch, user.googleId]);
 
 	return( 
     <>
