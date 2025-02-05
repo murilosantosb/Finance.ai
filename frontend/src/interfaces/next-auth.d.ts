@@ -4,11 +4,11 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
     interface Session {
         user: {
+            id: string | undefined;
             name: string;
             email: string;
             image: string;
-            googleId: string | null,
-            id: string | undefined;
+            googleId: string | undefined,
             balance: number,
             investment: number,
             revenue: number,
@@ -22,5 +22,8 @@ declare module "next-auth" {
         image: string;
         id?: string;
       }
-      
+
+      interface Profile {
+        picture: string,
+      }
 }

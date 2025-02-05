@@ -4,13 +4,12 @@
 import Image from 'next/image';
 //Hooks
 import React, { useState } from 'react';
-import userStore from '@/store/userStore';
 import { signOut } from "next-auth/react"
 
 // Components
 import { Button, Offcanvas } from "react-bootstrap"
 import { CiLogout } from "react-icons/ci";
-
+import { useSession } from 'next-auth/react';
 
 interface OffcanvasPanelProps {
     user?: string;
@@ -18,7 +17,7 @@ interface OffcanvasPanelProps {
 
 const OffcanvasPanel: React.FC<OffcanvasPanelProps> = () => {
     const [show, setShow] = useState(false);
-    const user = userStore((state) => state.user)
+    const { data } = useSession()
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -27,13 +26,13 @@ const OffcanvasPanel: React.FC<OffcanvasPanelProps> = () => {
     <>
         <Button variant='outline-dark' className='d-flex align-items-center gap-1 text-white fw-medium' onClick={handleShow}>
             <Image
-                src={`${user.image}` || "/images/photo-user.jpg"} 
+                src={`${data?.user.image}` || "/images/photo-user.jpg"} 
                 width={30}
                 height={30}
                 alt='Imagem da conta do usuário'
                 className=' rounded-5'
             />
-            {user.name}
+            {data?.user.name}
         </Button>
         <Offcanvas className="bg-secondary" show={show} onHide={handleClose} placement='end'>
             <Offcanvas.Header closeButton>
@@ -41,14 +40,14 @@ const OffcanvasPanel: React.FC<OffcanvasPanelProps> = () => {
             </Offcanvas.Header>
             <Offcanvas.Body className='text-white d-flex flex-column align-items-center gap-4'>
                 <Image
-                    src={`${user.image}` || "/images/photo-user.jpg"} 
+                    src={`${data?.user.image}` || "/images/photo-user.jpg"} 
                     width={120}
                     height={120}
                     alt='Imagem da conta do usuário'
                     className=' rounded-5'
                 />
-                <strong className='h2 font-monospace'>{user.name}</strong>
-                <p><strong>Email:</strong> {user.email}</p>
+                <strong className='h2 font-monospace'>{data?.user.name}</strong>
+                <p><strong>Email:</strong> {data?.user.email}</p>
             <Button
                 variant='outline-danger'
                 className='text-white fw-bold d-flex align-items-center gap-2'

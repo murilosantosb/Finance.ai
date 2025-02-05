@@ -1,34 +1,36 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useCallback } from "react";
 import apiRequest from "@/utils/apiRequest";
 import { apiRequestProps } from "@/interfaces/apiType";
 
 export function useFetch<T>({ endpoint, method, body, autoFetch = true }: apiRequestProps<T>) {
     const [data, setData] = useState<T | null>(null);
     const [error, setError] = useState<string | null>(null);
-    const [isPending, startTransition] = useTransition();
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const fetchData = async (): Promise<{ data: T | null }> => {
-        startTransition(async () => {
-            setError(null);
+    const fetchData = useCallback(async (): Promise<{ data: T | null }> => {
+        setIsLoading(true);
+        setError(null);
 
-            try {
-                const requestResult: T | null = await apiRequest({ endpoint, method, body, autoFetch });
-                setData(requestResult);
-            } catch (error) {
-                setError(error instanceof Error ? error.message : 'Erro desconhecido.');
-            }
-        });
+        try {
+            const requestResult: T | null = await apiRequest({ endpoint, method, body });
+            setData(requestResult);
+            return { data: requestResult };
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "Erro desconhecido.");
+        } finally {
+            setIsLoading(false);
+        }
+
         return { data };
-    }
+    }, [data, endpoint, method, body]);
 
     useEffect(() => {
         if (autoFetch) {
             fetchData();
         }
-    }, [endpoint, method, body, autoFetch, fetchData]);
+    }, [fetchData, autoFetch]);
 
-    return { data, isPending, error, refetch: fetchData }
+    return { data, isLoading, error, refetch: fetchData };
 }

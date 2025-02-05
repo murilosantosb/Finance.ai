@@ -4,11 +4,11 @@ const userSchema = new Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
     image: {type: String},
-    googleId: { type: String, default: null },
-    balance: { type: Number, default: 0.000 },
-    investment: { type: Number, default: 0.000 },
-    revenue: { type: Number, default: 0.000 },
-    expenses: { type: Number, default: 0.000 }
+    googleId: {type: String, required: true},
+    balance: { type: Number, default: 0 },
+    investment: { type: Number, default: 0 },
+    revenue: { type: Number, default: 0 },
+    expenses: { type: Number, default: 0 }
 },
 {
     timestamps: true

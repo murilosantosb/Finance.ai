@@ -1,8 +1,6 @@
-
-
 import { apiRequestProps } from "@/interfaces/apiType";
 
-async function apiRequest<T>({ endpoint, method, body, autoFetch = true }: apiRequestProps<T>) {
+async function apiRequest<T>({ endpoint, method, body, autoFetch = true }: apiRequestProps<T | null>) {
     const baseUrl = "http://localhost:5000/api";
     const url = `${baseUrl}${endpoint}`;
 
@@ -10,11 +8,8 @@ async function apiRequest<T>({ endpoint, method, body, autoFetch = true }: apiRe
         method,
         headers: {
             "Content-Type": "application/json",
-        }
-    }
-
-    if(body) {
-        options.body = JSON.stringify(body);
+        },
+        body: body ? JSON.stringify(body) : undefined,
     }
 
     try {
@@ -28,7 +23,8 @@ async function apiRequest<T>({ endpoint, method, body, autoFetch = true }: apiRe
         return (await responseData.json()) as T;
     }
     } catch (error) {
-        console.log("Erro ao fazer a requsição:", error);
+        console.log("Erro ao fazer a requisição:", error);
+        throw error;
     }
 
     return null;

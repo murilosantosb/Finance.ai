@@ -7,12 +7,7 @@ import { LuArrowUpDown } from "react-icons/lu";
 import BaseModal from '../Modal/BaseModal';
 
 // Hooks
-// import { use } from 'react';
-import financeStore from '@/store/financeStore';
-// import { useFetch } from '@/hooks/useFetch';
-
-//Types
-// import { userProps } from '@/interfaces/userType';
+import userStore from '@/store/userStore';
 
 //Libs
 import realToCents from '@/utils/realToCents';
@@ -20,7 +15,7 @@ import realToCents from '@/utils/realToCents';
 const FinancialSummaryGroup: React.FC = () => {
   
 
-  const { userFinance } = financeStore((state) => state);
+  const { balance, expenses, investment, revenue } = userStore((state) => state.user);
   
   
 
@@ -29,7 +24,7 @@ const FinancialSummaryGroup: React.FC = () => {
       <FinancialInfoCard
         variant='primary'
         title='Saldo'
-        amount={realToCents({variant: "cents_to_real", money: userFinance?.balance ?? 0})}
+        amount={realToCents({variant: "cents_to_real", money: balance})}
         icon='wallet'
         iconOptional='eye'
         background_icons='background-icon-primary'
@@ -50,7 +45,7 @@ const FinancialSummaryGroup: React.FC = () => {
       <FinancialInfoCard
         variant='secondary'
         title='Investido'
-        amount={realToCents({variant:"cents_to_real", money: userFinance?.investment ?? 0})}
+        amount={realToCents({variant:"cents_to_real", money: investment})}
         icon='piggy_bank'
         background_icons='background-icon-secondary'
       />
@@ -58,14 +53,14 @@ const FinancialSummaryGroup: React.FC = () => {
         variant='tertialy'
         icon='graph_up_arrow'
         title='Receita'
-        amount={realToCents({variant:"cents_to_real", money: userFinance?.revenue ?? 0})}
+        amount={realToCents({variant:"cents_to_real", money: revenue})}
         background_icons='background-icon-primary-revenue'
       />
       <FinancialInfoCard
         variant='tertialy'
         icon='graph_down_arrow'
         title='Despesas'
-        amount={realToCents({variant:"cents_to_real", money: userFinance?.expenses ?? 0})}
+        amount={realToCents({variant:"cents_to_real", money: expenses})}
         background_icons='background-icon-primary-expenses'
       />
     </section>

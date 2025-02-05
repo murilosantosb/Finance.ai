@@ -1,22 +1,26 @@
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
-export interface userProps{
-        name: string | null | undefined,
-        email: string | null | undefined,
-        image: string | null | undefined | StaticImport,
-        id: string,
-        googleId?: string | null;
-        balance?: number,
-        investment?: number,
-        revenue?: number,
-        expenses?: number,
-}
-
-export interface UserFinance {
-        _id: string;
+export interface UserProps {
+        name: string;
+        email: string;
+        image: string;
+        googleId: object | null;
+        id: string | undefined;
         balance: number;
         investment: number;
         revenue: number;
         expenses: number;
-        fetchFinanceData: (googleId: string) => Promise<void>;
+}
+export interface UserState {
+        user: {
+            name: string;
+            email: string;
+            image: string;
+            googleId: object | null;
+            id: string | undefined;
+            balance: number;
+            investment: number;
+            revenue: number;
+            expenses: number;
+        };
+        getUserData: (user: UserProps | null) => void;
 }

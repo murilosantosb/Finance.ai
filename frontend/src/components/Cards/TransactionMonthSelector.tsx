@@ -2,7 +2,6 @@
 
 import React from 'react'
 //Componentes
-import { Button } from 'react-bootstrap';
 import TransactionItem from './TransactionItem';
 import Link from 'next/link';
 

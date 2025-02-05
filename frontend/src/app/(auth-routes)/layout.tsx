@@ -7,7 +7,7 @@ interface LayoutProps {
 }
 
 
-export default async function Layout({ children }: LayoutProps) {
+export default async function LayoutPublic({ children }: LayoutProps) {
     const session = await getServerSession()
     
     if(session) {

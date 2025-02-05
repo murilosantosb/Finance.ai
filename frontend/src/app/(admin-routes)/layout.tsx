@@ -8,13 +8,16 @@ import { useSession } from "next-auth/react";
 import NavBar from "@/components/NavBar";
 
 // hooks
-import userStore from "@/store/userStore";
-import financeStore from "@/store/financeStore";
 import { useRouter } from "next/navigation";
 import { useFetch } from "@/hooks/useFetch";
+import userStore from "@/store/userStore";
 
-// Types
-import { UserFinance } from "@/interfaces/userType";
+//Types
+import { UserProps } from "@/interfaces/userType";
+
+interface UserDataProps {
+  user: UserProps;
+}
 
 interface PrivateLayoutProps {
 	children: React.ReactNode;
@@ -23,72 +26,64 @@ interface PrivateLayoutProps {
 export default function PrivateLayout({ children }: PrivateLayoutProps){
 	const { status, data } = useSession();
     const router = useRouter();
-    const { login, user } = userStore((state) => state);
-    const { setUserFinance } = financeStore((state) => state)
+    const { getUserData, user } = userStore();
 
-    const { refetch: loginRefetch } = useFetch({
-        endpoint:"/users/login",
-        method: "POST",
-        body: data?.user
-        ? {
-            name: data?.user.name || "",
-            email: data?.user.email || "",
-            image: data?.user.image || "",
-            googleId: data?.user.googleId || null,
-            balance: data?.user?.balance || 0,
-            investment: data?.user?.investment || 0,
-            revenue: data?.user?.revenue || 0,
-            expenses: data?.user?.expenses || 0,
-        }
-        : null,
-       autoFetch: false, 
+    const { data: userData, refetch } = useFetch<UserDataProps>({
+      endpoint: `/users/${data?.user.googleId}`,
+      method: "GET",
+      autoFetch: false,
     })
-
-    const {data: userData, refetch: fetchFinance} = useFetch<UserFinance>({
-        endpoint: `/users/finance/${user.googleId}`,
-        method: "GET",
-        autoFetch: false,
-    })
-
+    
     useEffect(() => {
-            if(status === "unauthenticated") {
-                router.push("/")
-            } else if(status === "authenticated" && data?.user) {
-                
-                if(!user.googleId && data?.user?.googleId) {
-                    login({
-                        id: data?.user.id || "",
-                        name: data?.user?.name || "",
-                        email: data?.user?.email || "",
-                        image: data?.user?.image || "",
-                        googleId: data?.user.googleId || null,
-                    })
-                }
+      if (status === "unauthenticated") {
+        router.push("/");
+        return;
+      }
 
-                if(!userData && data?.user?.googleId) {
-                    fetchFinance().then((response) => {
-                        // console.log('Finance API Response:', response);
-                        if(response?.data) {
-                            setUserFinance(response.data);
-                        }else {
-                            console.error("Erro ao buscar dados financeiros:");
-                        }
-                    })
-                }
+      // Busca os dados do usuário APENAS se ainda não estiverem carregados
+      if (status === "authenticated" && data?.user?.googleId && !userData) {
+          refetch();
+      }
+  }, [status, data?.user, userData, refetch, router]);
 
-                if(!user.googleId && data?.user?.googleId) {
-                    loginRefetch().then((response) => {
-                        console.log("Login response:", response)
-                    })
-                }
-                
-            }
-    }, [status, data?.user, login, router, fetchFinance, setUserFinance, userData, loginRefetch, user.googleId]);
+  // Atualiza o Zustand com os dados do usuário quando carregados
+  useEffect(() => {
+      if (userData && userData.user.id !== user.id) {
+          getUserData({
+            id: userData.user.id,
+            name: userData.user.name,
+            email: userData.user.email,
+            googleId: userData.user.googleId,
+            image: userData.user.image,
+            balance: userData.user.balance,
+            investment: userData.user.investment,
+            revenue: userData.user.revenue,
+            expenses: userData.user.expenses,
+          });
+      }
+  }, [userData, getUserData, user.id]);
+    
+
 
 	return( 
     <>
-            <NavBar />
-            {children}
+      <NavBar />
+      {children}
     </>
 )
 }
+
+/*
+useEffect(() => {
+        if (status === "unauthenticated") {
+          router.push("/");
+          return;
+        }
+    
+        if (status === "authenticated" && data.user.googleId && !userData) {
+            getUserData(userData);
+            // refetch();
+            return;
+        }
+      }, [data?.user, getUserData, refetch, router, status, userData]);
+*/
