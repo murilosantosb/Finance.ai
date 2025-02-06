@@ -21,6 +21,7 @@ const DateInput = () => {
                 dateFormat="dd/MM/yyyy"
                 className='custom-datepicker'
                 placeholderText="Selecionar Dia"
+                onKeyDown={(e) => e.preventDefault()}
             />
         </span>
     </Form.Group>
