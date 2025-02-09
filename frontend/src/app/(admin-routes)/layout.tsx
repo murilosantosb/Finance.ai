@@ -72,18 +72,3 @@ export default function PrivateLayout({ children }: PrivateLayoutProps){
     </>
 )
 }
-
-/*
-useEffect(() => {
-        if (status === "unauthenticated") {
-          router.push("/");
-          return;
-        }
-    
-        if (status === "authenticated" && data.user.googleId && !userData) {
-            getUserData(userData);
-            // refetch();
-            return;
-        }
-      }, [data?.user, getUserData, refetch, router, status, userData]);
-*/

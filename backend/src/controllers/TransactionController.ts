@@ -1,13 +1,11 @@
 import UserModel from "../models/User";
 import TransactionModel from "../models/Transaction";
 import { Request, Response } from "express";
-import mongoose from "mongoose";
 
 export async function createTransaction(req: Request, res: Response): Promise<void> {
     try {
-        const { title, userId, type, category, amount, paymentMethod, date } = req.body;
+        const { title, userId, financial_category, category, amount, payment_method, date } = req.body;
 
-        // const userId = new mongoose.Schema.Types.ObjectId(req.body.userId);
         const user = await UserModel.findOne({ googleId: userId });
         
         if(!user) {
@@ -19,10 +17,10 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
         const newTransaction = await TransactionModel.create({
             userId,
             title,
-            type,
+            financial_category,
             category,
             amount,
-            paymentMethod,
+            payment_method,
             date,
         });
         await newTransaction.save();
@@ -38,6 +36,7 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
 export async function getUserTransactionsById(req: Request, res: Response): Promise<void> {
     try {
         const { googleId } = req.params;
+        const { limit } = req.query;
 
         const user = await UserModel.findOne({ googleId });
          
@@ -47,7 +46,12 @@ export async function getUserTransactionsById(req: Request, res: Response): Prom
             return;
         };
 
+        const transactionsLimit = Number(limit) || 10;
+
         const userTransactions = await TransactionModel.find({ userId: googleId })
+            .limit(transactionsLimit)
+            .sort({ date: -1 })
+            .exec();
 
         if(userTransactions.length === 0) {
             console.log("O usuário ainda não fez nenhuma transação.")

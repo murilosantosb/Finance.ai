@@ -1,4 +1,7 @@
-@import "globals.scss";
+@use "globals.scss" as *;
+
+
+
 
 $primary: $green;
 $secondary: $dark-gray;
@@ -17,5 +20,6 @@ $input-color: $light-gray;
 $input-focus-border-color: $bg-primary;
 $input-placeholder-color: $gray;
 $input-border-width: 2px;
+
 
 @import "bootstrap/scss/bootstrap";

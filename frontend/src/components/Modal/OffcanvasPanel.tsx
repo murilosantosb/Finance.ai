@@ -11,11 +11,8 @@ import { Button, Offcanvas } from "react-bootstrap"
 import { CiLogout } from "react-icons/ci";
 import { useSession } from 'next-auth/react';
 
-interface OffcanvasPanelProps {
-    user?: string;
-}
 
-const OffcanvasPanel: React.FC<OffcanvasPanelProps> = () => {
+const OffcanvasPanel: React.FC = () => {
     const [show, setShow] = useState(false);
     const { data } = useSession()
 
@@ -26,11 +23,11 @@ const OffcanvasPanel: React.FC<OffcanvasPanelProps> = () => {
     <>
         <Button variant='outline-dark' className='d-flex align-items-center gap-1 text-white fw-medium' onClick={handleShow}>
             <Image
-                src={`${data?.user.image}` || "/images/photo-user.jpg"} 
+                src={data?.user.image ? `${data?.user.image}` : "/images/photo-user.jpg"} 
                 width={30}
                 height={30}
                 alt='Imagem da conta do usuário'
-                className=' rounded-5'
+                className='rounded-5'
             />
             {data?.user.name}
         </Button>
@@ -40,7 +37,7 @@ const OffcanvasPanel: React.FC<OffcanvasPanelProps> = () => {
             </Offcanvas.Header>
             <Offcanvas.Body className='text-white d-flex flex-column align-items-center gap-4'>
                 <Image
-                    src={`${data?.user.image}` || "/images/photo-user.jpg"} 
+                    src={data?.user.image ? `${data?.user.image}` : "/images/photo-user.jpg"} 
                     width={120}
                     height={120}
                     alt='Imagem da conta do usuário'

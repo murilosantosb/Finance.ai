@@ -1,40 +1,182 @@
-"use client"
+"use client";
 
-import React from 'react'
-//Componentes
-import TransactionItem from './TransactionItem';
-import Link from 'next/link';
+import React, { useEffect, useState } from "react";
+// Componentes
+import TransactionItem from "./TransactionItem";
+import Link from "next/link";
 
-interface TransactionMonthSelectorProps {
-    title?: string;
-}
+// Hooks
+import { useFetch } from "@/hooks/useFetch";
+import { useSession } from "next-auth/react";
 
-const TransactionMonthSelector: React.FC<TransactionMonthSelectorProps> = () => {
+// Types
+import { TransactionItemProps } from "@/interfaces/transactionType";
+
+const TransactionMonthSelector: React.FC = () => {
+  const { data: user } = useSession();
+  const userGoogleId = user?.user?.googleId;
+
+  const { refetch, data, isLoading } = useFetch<{ userTransactions: TransactionItemProps[] }>({
+    endpoint: userGoogleId ? `/transaction/user/${userGoogleId}` : "",
+    method: "GET",
+    autoFetch: false,
+  });
+
+  const [hasFetched, setHasFetched] = useState(false);
+
+  useEffect(() => {
+    if (userGoogleId && !hasFetched) {
+      refetch();
+      setHasFetched(true);
+    }
+  }, [userGoogleId, hasFetched, refetch]);
+
   return (
-    <section className='transaction-month-selelector-container'>
-        <header className='transaction-month-header'>
-          <h1 className='text-white'>Transações</h1>
-            <Link href="/transaction" className='btn btn-secondary'>
-              Ver mais
-            </Link>
-        </header>
+    <section className="transaction-month-selelector-container">
+      <header className="transaction-month-header">
+        <h1 className="text-white">Transações</h1>
+        <Link href="/transaction" className="btn btn-secondary">
+          Ver mais
+        </Link>
+      </header>
 
-        <section>
-            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
-            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
-            <TransactionItem title='Aluguel' payment_method='BILLET' financial_category='SPENT' date='15/11/2024' amount={800}/>
-            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
-            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
-            <TransactionItem title='Aluguel' payment_method='BILLET' financial_category='SPENT' date='15/11/2024' amount={800}/>
-            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
-            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
-            <TransactionItem title='Aluguel' payment_method='BILLET' financial_category='SPENT' date='15/11/2024' amount={800}/>
-            <TransactionItem title='Salário' payment_method='PIX' financial_category='GAIN' date='15/11/2024' amount={3900}/>
-            <TransactionItem title='Bitcoin' payment_method='CREDIT' financial_category='INVESTMENT' date='15/11/2024' amount={120}/>
-        </section>
-
+      <section>
+        {isLoading ? (
+          <p className="text-white">Carregando...</p>
+        ) : data?.userTransactions?.length ? (
+          data.userTransactions.map((transactions) => (
+            <TransactionItem
+              key={transactions._id}
+              title={transactions.title}
+              payment_method={transactions.payment_method}
+              financial_category={transactions.financial_category}
+              date={transactions.date}
+              amount={transactions.amount}
+            />
+          ))
+        ) : (
+          <div className="text-white fw-bold d-flex align-items-center justify-content-center p-2">
+            <p>Você ainda não fez nenhuma transação!</p>
+          </div>
+        )}
+      </section>
     </section>
-  )
-}
+  );
+};
 
-export default TransactionMonthSelector
+export default TransactionMonthSelector;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// "use client"
+
+// import React, { useMemo, useEffect, useCallback, useState } from 'react'
+// //Componentes
+// import TransactionItem from './TransactionItem';
+// import Link from 'next/link';
+
+// // hooks
+// import { useFetch } from '@/hooks/useFetch';
+// import { useSession } from 'next-auth/react';
+
+// // Types
+// import { TransactionItemProps } from '@/interfaces/transactionType';
+
+// interface UserTransactionsProps {
+//   userTransactions: TransactionItemProps[];
+// }
+
+// const TransactionMonthSelector: React.FC = () => {
+//   const { data: user, } = useSession();
+
+//   const userGoogleId = useMemo(() => user?.user?.googleId, [user?.user?.googleId]);
+
+//   const { refetch, data } = useFetch<UserTransactionsProps>({
+//     endpoint: userGoogleId ? `/transaction/user/${userGoogleId}` : "",
+//     method: "GET",
+//     autoFetch: false,
+//   });
+
+//   const [hasFetched, setHasFetched] = useState(false);
+
+//   const stableRefetch = useCallback(() => {
+//     if (userGoogleId && !hasFetched) {
+//       refetch();
+//       setHasFetched(true);
+//     }
+//   }, [userGoogleId, refetch, hasFetched]); 
+
+//   useEffect(() => {
+//     stableRefetch();
+//     console.log("API chamada");
+//   }, [stableRefetch]);
+
+//   return (
+//     <section className='transaction-month-selelector-container'>
+//         <header className='transaction-month-header'>
+//           <h1 className='text-white'>Transações</h1>
+//             <Link href="/transaction" className='btn btn-secondary'>
+//               Ver mais
+//             </Link>
+//         </header>
+
+//         <section>
+//           {data?.userTransactions?.length ? (
+//             data.userTransactions.map((transactions) => (
+//              <TransactionItem
+//                 key={transactions._id}
+//                 title={transactions.title}
+//                 payment_method={transactions.payment_method}
+//                 financial_category={transactions.financial_category}
+//                 date={transactions.date}
+//                 amount={transactions.amount}
+//               />
+//             ))
+//           ) : (
+//             <div className='text-white fw-bold d-flex align-items-center justify-content-center p-2'>
+//               <p>Você ainda não fez nenhuma transação!</p>
+//             </div>
+//           )}
+//         </section>
+
+//     </section>
+//   )
+// }
+
+// export default TransactionMonthSelector;

@@ -1,4 +1,5 @@
-@import "globals.scss";
+// @use "globals.scss" as *;
+@use "globals" as *;
 
 .navbar-container {
     display: flex;

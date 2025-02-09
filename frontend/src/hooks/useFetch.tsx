@@ -9,12 +9,17 @@ export function useFetch<T>({ endpoint, method, body, autoFetch = true }: apiReq
     const [error, setError] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const fetchData = useCallback(async (): Promise<{ data: T | null }> => {
+    const fetchData = useCallback(async (newBody?: T): Promise<{ data: T | null }> => {
         setIsLoading(true);
         setError(null);
 
         try {
-            const requestResult: T | null = await apiRequest({ endpoint, method, body });
+            const requestResult: T | null = await apiRequest({
+                endpoint,
+                method,
+                body: newBody || body
+            });
+            
             setData(requestResult);
             return { data: requestResult };
         } catch (error) {

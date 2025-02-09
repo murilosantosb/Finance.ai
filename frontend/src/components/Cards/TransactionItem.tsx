@@ -3,13 +3,11 @@ import React from 'react'
 // Componentes
 import Icon from '../Icon';
 
-interface TransactionItemProps {
-    title: string;
-    payment_method: "PIX" | "CREDIT" | "BILLET";
-    financial_category: "GAIN" | "SPENT" | "INVESTMENT";
-    date: string | undefined;
-    amount: number;
-}
+// Utils
+import { formatDate } from '@/utils/formatDate';
+import realToCents from '@/utils/realToCents';
+
+import { TransactionItemProps } from '@/interfaces/transactionType';
 
 const TransactionItem: React.FC<TransactionItemProps> = ({title, payment_method, financial_category, date, amount}) => {
   return (
@@ -24,17 +22,17 @@ const TransactionItem: React.FC<TransactionItemProps> = ({title, payment_method,
                         financial_category === "SPENT" ? "background-icon-secondary-expenses" :
                         "background-icon-tertialy"
                     }
-                    variant={payment_method === "PIX" ? "pix" : payment_method === "CREDIT" ? "credit_card_fill" : "ticket"}/>
+                    variant={payment_method === "PIX" ? "pix" : payment_method === "CARD" ? "credit_card_fill" : "ticket"}/>
                     
                     <span>
                         <strong>{title}</strong>
-                        <time dateTime={date}>15 Nov, 2024</time>
+                        <time>{formatDate(date)}</time>
                     </span>
 
                 </div>
                     <span className={financial_category === "GAIN" ? "color-green" : financial_category === "SPENT" ? "color-red" : "text-white"}>
                         {
-                            financial_category === "GAIN" ? `+R$ ${amount}` : `-R$ ${amount}`
+                            financial_category === "GAIN" ? `+${realToCents({variant: "cents_to_real", money: amount})}` : `-${realToCents({variant: "cents_to_real", money: amount})}`
                         }
                     </span>
             </li>

@@ -1,4 +1,5 @@
-@import "globals.scss";
+// @use "globals.scss" as *;
+@use "globals" as *;
 
 // FinancialInfoCard, Group and Icons
 
@@ -134,8 +135,8 @@ main.dashboard-container {
 }
 
 .card-info-tertialy {
-    @include card-info(400px, 126px, 20px, 32px 24px);
     background-color: transparent;
+    @include card-info(400px, 126px, 20px, 32px 24px);
 }
 
 .financial-info-card {

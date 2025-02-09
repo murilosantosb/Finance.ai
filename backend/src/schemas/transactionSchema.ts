@@ -3,12 +3,12 @@ import { z } from "zod"
 export const transactionSchema = z.object({
     userId: z.string(),
     title: z.string().min(3, "O título tem que conter mais de 3 caracteres."),
-    type: z.enum(["Gasto", "Ganho", "Investimento", "Depósito", "Saque"]),
+    financial_category: z.enum(["GAIN", "SPENT", "INVESTMENT", "DEPOSIT", "SAKE"]),
     category: z.enum(["Moradia", "Alimentação", "Transporte", "Saúde", "Lazer", "Outros"]).optional(),
-    amount: z.number(),
-    paymentMethod: z.enum(["Pix", "Cartão", "Boleto"]),
+    amount: z.number().min(10, "Aceitamos apenas transações a partir de 10 reais."),
+    payment_method: z.enum(["PIX", "CARD", "BILLET"]),
     date: z.preprocess((val) => {
-        if(typeof val === "string" || typeof val === "number") {
+        if(typeof val === "string" || val instanceof Date) {
             const parsedDate = new Date(val);
             return isNaN(parsedDate.getTime()) ? undefined : parsedDate;
         }
