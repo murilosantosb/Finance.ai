@@ -8,6 +8,7 @@ import "../styles/login.scss";
 import "../styles/navbar.scss";
 import "../styles/dashboard.scss";
 import "../styles/modals.scss";
+import "../styles/skeletons.scss";
 
 import { AuthProvider } from "@/components/AuthoProvider";
 

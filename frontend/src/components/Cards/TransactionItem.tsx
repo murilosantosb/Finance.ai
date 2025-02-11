@@ -18,8 +18,8 @@ const TransactionItem: React.FC<TransactionItemProps> = ({title, payment_method,
                     <Icon
                     background_color=
                     {
-                        financial_category === "GAIN" ? "background-icon-secondary-revenue" :
-                        financial_category === "SPENT" ? "background-icon-secondary-expenses" :
+                        financial_category === "GAIN" || financial_category === "DEPOSIT" ? "background-icon-secondary-revenue" :
+                        financial_category === "SPENT" || financial_category === "SAKE" ? "background-icon-secondary-expenses" :
                         "background-icon-tertialy"
                     }
                     variant={payment_method === "PIX" ? "pix" : payment_method === "CARD" ? "credit_card_fill" : "ticket"}/>

@@ -1,0 +1,59 @@
+@use "globals" as *;
+
+/* Container do Skeleton */
+.transaction-month-selelector-container {
+    padding: 10px;
+  }
+
+  .skeleton-item {
+    display: flex;
+    align-items: center;
+    background-color: #121212;
+    color: #fff;
+    border: none;
+    padding: 16px 20px;
+  }
+
+  .skeleton-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+  }
+  
+
+  .skeleton-details {
+    flex-grow: 1;
+    margin-left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .skeleton-text-lg {
+    width: 60%;
+    height: 12px;
+  }
+  
+  .skeleton-text-sm {
+    width: 40%;
+    height: 10px;
+  }
+  
+  .skeleton-value {
+    width: 20%;
+    height: 12px;
+    margin-left: auto;
+  }
+  
+  .skeleton-glow {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 25%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 75%);
+    background-size: 200% 100%;
+    animation: glowAnimation 2s infinite ease-in-out;
+    border-radius: 4px;
+  }
+  
+  @keyframes glowAnimation {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  

@@ -1,7 +1,7 @@
 
 
 interface realToCentsProps {
-    money: number | undefined | null;
+    money: number | null | undefined;
     variant: "real_to_cents" | "cents_to_real";
 }
 
