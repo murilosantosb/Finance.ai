@@ -19,25 +19,13 @@ const TransactionMonthSelector: React.FC = () => {
   const { transactions, setTransactions } = transactionStore();
 
   const { refetch, data, isLoading } = useFetch<{ userTransactions: TransactionItemProps[] }>({ 
-    endpoint: userGoogleId ? `/transaction/user/${userGoogleId}` : "",
+    endpoint: userGoogleId ? `/transaction/user/${userGoogleId}?limit=13` : "",
     method: "GET",
     autoFetch: false,
   });
 
   const [hasFetched, setHasFetched] = useState(false);
 
-  // useEffect(() => {
-  //   if (userGoogleId && !hasFetched) {
-  //     refetch();
-  //     setHasFetched(true);
-  //   }
-  // }, [userGoogleId, hasFetched, refetch]);
-
-  // useEffect(() => {
-  //   if(data?.userTransactions && userGoogleId) {
-  //     setTransactions(data.userTransactions);
-  //   }
-  // }, [data, setTransactions, hasFetched, userGoogleId]);
 
   useEffect(() => {
     if(userGoogleId && !hasFetched) {

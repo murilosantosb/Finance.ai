@@ -44,7 +44,8 @@ export default function PrivateLayout({ children }: PrivateLayoutProps){
       if (status === "authenticated" && data?.user?.googleId && !userData) {
           refetch();
       }
-  }, [status, data?.user, userData, refetch, router]);
+
+  }, [status, data?.user, userData, refetch, router, user.balance]);
 
   // Atualiza o Zustand com os dados do usuário quando carregados
   useEffect(() => {

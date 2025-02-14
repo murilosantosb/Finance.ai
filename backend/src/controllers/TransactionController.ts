@@ -12,8 +12,20 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
             res.status(404).json({ errors: ["Usuário não encontrado!"] });
             console.error("Não foi possível identificar o usuário.");
             return;
-        }
+        };
 
+        let updateFields: any = {};
+
+        if(financial_category === "GAIN") {
+           updateFields.$inc = { balance: amount, revenue: amount };
+        }else if(financial_category === "SPENT") {
+            updateFields.$inc = { balance: -amount, expenses: amount };
+        }else if (financial_category === "INVESTMENT") {
+            updateFields.$inc = { balance: -amount, investment: amount };
+        };
+
+        await UserModel.updateOne({ googleId: userId }, updateFields);
+        
         const newTransaction = await TransactionModel.create({
             userId,
             title,
@@ -23,7 +35,7 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
             payment_method,
             date,
         });
-        await newTransaction.save();
+
         res.status(201).json({ message: "Transição criada com sucesso.", newTransaction });
         return;
     } catch (error) {

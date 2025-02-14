@@ -39,8 +39,6 @@ const AddTransactionModal: React.FC<ModalProps> = (props) => {
                             <option value="GAIN">Ganho</option>
                             <option value="SPENT">Gasto</option>
                             <option value="INVESTMENT">Investimento</option>
-                            <option value="DEPOSIT">Depósito</option>
-                            <option value="SAKE">Saque</option>
                         </Form.Select>
                         {errors.financial_category && <span className="text-danger">Escolha uma opção.</span>}
                     </Form.Group>
@@ -53,7 +51,7 @@ const AddTransactionModal: React.FC<ModalProps> = (props) => {
                             <option value="PIX">Pix</option>
                             <option value="CARD">Cartão de crédito</option>
                         </Form.Select>
-                        {errors.payment_method && <span className="text-danger">Escolha uma opção.</span>}
+                        {errors.payment_method && <span className="text-danger">Escolha um método de pagamento.</span>}
                     </Form.Group>
 
                     <Form.Group>
@@ -67,6 +65,7 @@ const AddTransactionModal: React.FC<ModalProps> = (props) => {
                             <option value="Saúde">Saúde</option>
                             <option value="Outros">Outros</option>
                         </Form.Select>
+                        {errors.category && <span className='text-danger'>Escolha uma categoria</span>}
                     </Form.Group>
 
                     <DateInput setValue={setValue} register={register} name="date" error={errors.date} watch={watch}/>

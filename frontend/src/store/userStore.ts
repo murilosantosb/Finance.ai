@@ -19,6 +19,9 @@ const userStore = create<UserState>((set) => ({
         user: { ...state.user, ...user },
     })),
 
+    getFinanceOfUser: (finance) => set((state) => ({
+        user: {...state.user, ...finance}
+    }))
 }));
 
 export default userStore;

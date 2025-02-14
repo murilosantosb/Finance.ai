@@ -9,7 +9,17 @@ export interface UserProps {
         investment: number;
         revenue: number;
         expenses: number;
+};
+
+export interface UserFinanceProps {
+        user: {
+                balance: number;
+                investment: number;
+                revenue: number;
+                expenses: number
+        }
 }
+
 export interface UserState {
         user: {
             name: string;
@@ -23,4 +33,5 @@ export interface UserState {
             expenses: number;
         };
         getUserData: (user: UserProps | null) => void;
-}
+        getFinanceOfUser: (finance: UserFinanceProps | null) => void;
+};

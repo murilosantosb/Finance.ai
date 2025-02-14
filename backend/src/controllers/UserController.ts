@@ -57,3 +57,26 @@ export async function getUserById(req: Request, res: Response): Promise<void> {
      return;
   }
 }
+
+
+export async function getFinanceOfUser(req: Request, res: Response): Promise<void> {
+  try {
+    const { googleId } = req.params;
+
+    // Buscar usuário pelo email
+    const user = await UserModel.findOne({ googleId }).select("balance investment revenue expenses");
+
+    if (!user) {
+        res.status(404).json({ errors: ["Usuário não encontrado!"] });
+        return;
+    }
+
+     res.status(200).json({ user });
+     return;
+  } catch (error) {
+     console.error("Erro ao buscar usuário:", error);
+     res.status(500).json({ errors: "Erro ao buscar usuário." });
+     return;
+  }
+}
+
