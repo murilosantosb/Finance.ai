@@ -1,12 +1,33 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Doughnut } from "react-chartjs-2"
-import { data, options } from "@/utils/graphSettings"
+import { getChartData, options } from "@/utils/graphSettings"
 import Icon from '../Icon'
+import percentagesStore from '@/store/percentagesStore'
+import userStore from '@/store/userStore'
 
 const FinanceChart: React.FC = () => {
+  const data = getChartData();
+  const { percentages, calculateUserPencentages } = percentagesStore();
+  const { user } = userStore();
+  
+  const total = user.revenue + user.investment + user.expenses;
+
+  const gain = user.revenue / total * 100;
+  const investment = user.investment / total * 100;
+  const spent = user.expenses / total * 100;
+
+  
+  useEffect(() => {   
+    calculateUserPencentages({
+      gain: Number(gain.toFixed(1)),
+      investment: Number(investment.toFixed(1)),
+      spent: Number(spent.toFixed(1)),
+    })
+  }, [calculateUserPencentages, gain, investment, spent])
+
   return (
     <section className='finance-chart'>
             <section className='chart-content'>
@@ -20,7 +41,7 @@ const FinanceChart: React.FC = () => {
                       <Icon size={25} variant="graph_up_arrow" background_color='background-icon-secondary-revenue'/>
                       <p>Ganhos</p>
                     </span>
-                    <strong>60%</strong>
+                    <strong>{percentages.gain}%</strong>
                 </div>
 
                 <div>
@@ -28,7 +49,7 @@ const FinanceChart: React.FC = () => {
                       <Icon size={25} variant='graph_down_arrow' background_color='background-icon-secondary-expenses'/>
                       <p>Gastos</p>
                     </span>
-                    <strong>22%</strong>
+                    <strong>{percentages.spent}%</strong>
                 </div>
 
                 <div>
@@ -36,7 +57,7 @@ const FinanceChart: React.FC = () => {
                     <Icon size={25} variant='piggy_bank' background_color='background-icon-tertialy'/>
                     <p>Investimentos</p>
                    </span>
-                   <strong>18%</strong>
+                   <strong>{percentages.investment}%</strong>
                 </div>
 
             </section>
