@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 
 const SkeletonTransactionList = () => {
   return (
-    // <section className="transaction-month-selelector-container">
+    
       <ListGroup variant="flush">
         {[...Array(11)].map((_, index) => (
           <ListGroup.Item key={index} className="skeleton-item">
@@ -18,7 +18,6 @@ const SkeletonTransactionList = () => {
           </ListGroup.Item>
         ))}
       </ListGroup>
-    // </section>
   );
 };
 

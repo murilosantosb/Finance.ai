@@ -49,24 +49,3 @@ const BaseModal: React.FC<BaseModalPropss> = (props) => {
 }
 
 export default BaseModal
-
-
-/*
-
-<Modal.Header closeButton className='modal-header'>
-              {props.modal_icon && props.modal_icon}
-              <Modal.Title className='text-white'>{props.title_modal}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="modal-body-custom">{props.modal_content}</Modal.Body>
-          <Modal.Footer className='modal-footer'>
-            {props.modal_button_secondary?.title && (
-              <Button variant={props.modal_button_secondary.variant} onClick={handleClose}>
-                {props.modal_button_secondary.title}
-              </Button>
-            )}
-            <Button variant={props.modal_button_primary.variant} onClick={handleClose}>
-              {props.modal_button_primary.title}
-            </Button>
-          </Modal.Footer>
-
-*/

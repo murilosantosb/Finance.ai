@@ -1,5 +1,6 @@
 import UserModel from "../models/User";
 import TransactionModel from "../models/Transaction";
+import CategoryModel from "../models/Category";
 import { Request, Response } from "express";
 
 export async function createTransaction(req: Request, res: Response): Promise<void> {
@@ -25,7 +26,27 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
         };
 
         await UserModel.updateOne({ googleId: userId }, updateFields);
-        
+
+        if(!category) {
+            res.status(400).json({ errors: ["A categoria é obrigatória!"] });
+            return;
+        }
+
+        let existingCategory = await CategoryModel.findOne({ userId, name: category });
+
+        if(!existingCategory) {
+            existingCategory = await CategoryModel.create({
+                userId,
+                amount,
+                name: category.trim(),
+            })
+        }else {
+            await CategoryModel.updateOne(
+                { userId: userId, name: category },
+                { $inc: { amount: amount } },
+            );
+        };
+
         const newTransaction = await TransactionModel.create({
             userId,
             title,
@@ -36,7 +57,7 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
             date,
         });
 
-        res.status(201).json({ message: "Transição criada com sucesso.", newTransaction });
+        res.status(201).json({ message: "Transição criada com sucesso.", newTransaction});
         return;
     } catch (error) {
         console.error("Não foi possível criar a transição.", error);

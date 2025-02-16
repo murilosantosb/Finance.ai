@@ -1,8 +1,5 @@
 @use "globals.scss" as *;
 
-
-
-
 $primary: $green;
 $secondary: $dark-gray;
 $info: $gray; 
@@ -20,6 +17,9 @@ $input-color: $light-gray;
 $input-focus-border-color: $bg-primary;
 $input-placeholder-color: $gray;
 $input-border-width: 2px;
+
+$progress-bg: $dark-green; 
+$progress-border-radius: 10px ;
 
 
 @import "bootstrap/scss/bootstrap";
