@@ -8,6 +8,12 @@
       {
         "select-name": "off"
       }
+    ],
+    "axe/aria": [
+      "default",
+      {
+        "empty-table-header": "off"
+      }
     ]
   }
 }

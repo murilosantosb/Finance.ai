@@ -114,5 +114,5 @@ export const useTransactionForm = (onSuccess: () => void) => {
         }
     };
 
-    return { register, handleSubmit, errors, setValue, onSubmit, watch};
+    return { register, handleSubmit, errors, setValue, onSubmit, watch };
 };

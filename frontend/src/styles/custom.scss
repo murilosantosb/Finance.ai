@@ -9,6 +9,7 @@ $modal-header-border-color: none;
 $modal-body-border-color: none;
 $modal-footer-border-color: none;
 $modal-content-border-radius: 20px;
+$modal-btn-close-color: white;
 
 $input-bg: $bg-secondary;
 $input-border-color: $dark-gray;
@@ -19,7 +20,14 @@ $input-placeholder-color: $gray;
 $input-border-width: 2px;
 
 $progress-bg: $dark-green; 
-$progress-border-radius: 10px ;
+$progress-border-radius: 10px;
+
+$table-bg: $bg-primary;
+$table-border-color: $gray;
+$table-hover-bg: $dark-green; 
+
+$btn-close-color: #ffffff;
+$btn-close-opacity: 1;
 
 
 @import "bootstrap/scss/bootstrap";

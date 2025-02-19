@@ -45,7 +45,7 @@ const DateInput = <T extends FieldValues>({ name, error, register, setValue, wat
 
         <input type="hidden" {...register(name)} />
       </span>
-      {error && <span className="text-danger">{error.message}</span>}
+      {error && <span className="text-danger">Adicione uma data válida</span>}
     </Form.Group>
   );
 }

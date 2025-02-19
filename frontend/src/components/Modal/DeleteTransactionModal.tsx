@@ -13,7 +13,7 @@ interface DeleteModalProps extends ModalProps {
 const DeleteTransactionModal: React.FC<DeleteModalProps> = (props) => {
   return (
     <>
-    <Modal.Header closeButton className='modal-header'>
+    <Modal.Header className='modal-header'>
             {props.variant === "modal_delete" ? (
               <>
                 <IoCloseCircleOutline size={25} className='bg-danger text-black rounded-5'/>

@@ -9,6 +9,7 @@ import "../styles/navbar.scss";
 import "../styles/dashboard.scss";
 import "../styles/modals.scss";
 import "../styles/skeletons.scss";
+import "../styles/transaction.scss";
 
 import { AuthProvider } from "@/components/AuthoProvider";
 

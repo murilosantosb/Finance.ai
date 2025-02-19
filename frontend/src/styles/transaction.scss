@@ -1,0 +1,207 @@
+@use "globals" as *;
+
+// HEADER
+
+header.transacion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+        color: white;
+        font-size: 30px;
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        color: white;
+        gap: 8px;
+
+        &:hover{
+            color: white;
+        }
+    }
+
+}
+
+// COMPONENTE BADGE
+
+.transacion-badge {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+
+    width: 100%;
+    max-width: 110px;
+    font-weight: bolder;
+    border-radius: 15px;
+
+    div.badge-circle {
+        width: 8px;
+        height: 8px;
+        border-radius: 100%;
+    }
+}
+
+.badge-primary {
+    background-color: #0f190c !important;
+    color: $green !important;
+
+    div.badge-circle {
+        background-color: $green !important;
+    }
+}
+
+.badge-secondary {
+    background-color: #1d0e10 !important;
+    color: $red !important;
+
+    div.badge-circle {
+        background-color: $red !important;
+    }
+}
+
+.badge-tertialy {
+    background-color: #1e1e20 !important;
+    color: white !important;
+
+    div.badge-circle {
+        background-color: white !important;
+    }
+}
+
+// CONTAINER
+
+.transaction-table {
+    background-color: $dark-gray;
+    margin-top: 20px;
+    width: 100%;
+    border: 3px solid $dark-gray;
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    
+    thead th {
+        padding: 15px;
+        color: white;
+        font-weight: 400;
+        background-color: #131315 !important;
+    }
+
+    tr , td {
+        color: white;
+        padding: 10px;
+    }
+
+    td.td-icons-container {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        
+    }
+
+    td.data, .td-icons {
+        color: $gray;
+    }
+
+    button.td-icons {
+        border: none;
+        outline: none;
+        background-color: transparent;
+        display: flex;
+    }
+
+
+    @media (max-width: 936px) {
+        td.td-icons-container {
+            height: 100px;     
+        }
+    }
+}
+
+// OffCanvas de Edição de transações
+
+.transaction-offcanvas {
+    background-color: $bg-secondary;
+    color: white;
+    height: 100vh;
+    
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+
+        input, select {
+            width: 350px;
+        }
+        
+        section.transaction-form-button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+
+            button {
+                border-radius: 12px;
+                width: 170px;
+            }
+        }
+    }
+    
+    button {
+        align-self: flex-end;
+    }
+}
+
+// UPDATE STATUS COMPONENT
+
+section.update-status-container {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+
+    
+    border-radius: 15px;
+    padding: 10px 15px;
+    color: white;
+    width: 350px;
+    margin: 30% 0 10px 10px;
+
+    span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+}
+
+.update-status-alert {
+    background-color: #262626;
+    border: 1px solid $gray;
+}
+
+.update-status-success {
+    background-color: $off-green;
+    border: 1px solid $green;
+
+    svg {
+        color: $green;
+    }
+}
+
+.close-status {
+    opacity: 0;
+    visibility: hidden
+};
+
+.show-status {
+    opacity: 1;
+    visibility: visible;
+}
