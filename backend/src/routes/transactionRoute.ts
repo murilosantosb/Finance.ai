@@ -4,7 +4,7 @@ const routes = express.Router();
 
 
 // Controllers
-import { createTransaction, getUserTransactionsById } from "../controllers/TransactionController";
+import { createTransaction, getUserTransactionsById, deleteTransactionById } from "../controllers/TransactionController";
 
 // Middlewares
 import { validateDataSchema } from "../middlewares/validate";
@@ -17,6 +17,7 @@ import { transactionSchema } from "../schemas/transactionSchema";
 
 routes.post("/create", validateDataSchema(transactionSchema), createTransaction);
 routes.get("/user/:googleId", getUserTransactionsById);
+routes.delete("/:_id", deleteTransactionById);
 
 
 export default routes;

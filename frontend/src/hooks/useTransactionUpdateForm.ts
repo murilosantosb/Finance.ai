@@ -1,3 +1,4 @@
+"use client";
 
 // Validation
 import { useForm } from "react-hook-form";
@@ -14,12 +15,16 @@ import realToCents from "@/utils/realToCents";
 // Hooks
 import { useSession } from "next-auth/react";
 import { setGlobalStatusMessage } from "./useStatusMessage";
+// import transactionStore from "@/store/transactionStore";
+// import { useFetch } from "./useFetch";
+// import { useEffect, useState } from "react";
 
 
 type FormData = z.infer<typeof updatedTransactionSchema>;
 
 export const useTransactionUpdateForm = () => {
     const { data: user } = useSession();
+    // const { setTransactions } = transactionStore();
 
     const {
         register,
@@ -37,6 +42,16 @@ export const useTransactionUpdateForm = () => {
             userId: "",
         }
     })
+
+    // const { data, refetch: getUserTransactions } = useFetch<{userTransacions: TransactionItemProps[]}>({
+    //     endpoint: `/transacion/user/${user?.user.googleId}`,
+    //     method: "GET",
+    //     autoFetch: false,
+    // })
+
+    
+
+    
 
     const onSubmit = async (data: FormData) => {
         try {

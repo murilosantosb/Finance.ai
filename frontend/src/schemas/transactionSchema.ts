@@ -17,4 +17,5 @@ export const updatedTransactionSchema = z.object({
     amount: z.coerce.number().min(10, "O valor deve ser no mínimo R$ 10.00").or(z.null()).or(z.undefined()),
     payment_method: z.enum(["PIX", "CARD", "BILLET"]),
     date: z.coerce.date(),
+    _id: z.string().optional(),
 });

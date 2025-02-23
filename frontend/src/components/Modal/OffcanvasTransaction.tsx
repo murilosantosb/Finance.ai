@@ -1,8 +1,9 @@
 'use client'
 
 // Hooks
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTransactionUpdateForm } from '@/hooks/useTransactionUpdateForm';
+import transactionStore from '@/store/transactionStore';
 
 // Componentes
 import { Offcanvas, Button, Form } from 'react-bootstrap';
@@ -14,12 +15,38 @@ import UpdateStatus from '../UpdateStatus';
 import { FiExternalLink } from "react-icons/fi";
 import { IoTrashOutline } from "react-icons/io5";
 
-const OffcanvasTransaction: React.FC = () => {
+// Types
+import { TransactionItemProps } from '@/interfaces/transactionType';
+
+interface OffCanvasProps {
+    _id: string | undefined,
+}
+
+const OffcanvasTransaction: React.FC<OffCanvasProps> = ({ _id }) => {
     const [show, setShow] = useState<boolean>(false);
+    const [transactionId, setTransactionId] = useState<TransactionItemProps | null>(null)
+    const { transactions } = transactionStore();
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
     const { register, errors, onSubmit, handleSubmit, setValue, watch } = useTransactionUpdateForm();
+    const amount = Number(transactionId?.amount) / 100;
+
+    useEffect(() => {
+        if(_id && show) {
+            const selectedTransaction = transactions.find(transaction => transaction._id === _id);
+
+            if(selectedTransaction) {
+                setTransactionId(selectedTransaction);
+
+                setValue("title", selectedTransaction.title);
+                setValue("amount", Number(selectedTransaction?.amount) / 100);
+                setValue("payment_method", selectedTransaction.payment_method);
+                setValue("category", selectedTransaction.category);
+                setValue("date", selectedTransaction.date as Date);
+            }
+        }
+    }, [_id, setValue, show, transactions])
 
   return (
     <>
@@ -35,17 +62,17 @@ const OffcanvasTransaction: React.FC = () => {
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group>
                         <Form.Label>Título</Form.Label>
-                        <Form.Control {...register("title")} placeholder='Salário'/>
+                        <Form.Control defaultValue={transactionId?.title} {...register("title")} placeholder='Salário'/>
                         {errors.title && <span className='text-danger'>{errors.title.message}</span>}
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Valor</Form.Label>
-                        <Form.Control type='number' {...register("amount")} placeholder='R$ 0.000,00'/>
+                        <Form.Control defaultValue={amount} type='number' {...register("amount")} placeholder='R$ 0.000,00'/>
                         {errors.amount && <span className='text-danger'>{errors.amount?.message}</span>}
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Método de pagamento</Form.Label>
-                        <Form.Select {...register("payment_method")}>
+                        <Form.Select defaultValue={transactionId?.payment_method} {...register("payment_method")}>
                             <option value="PIX">Pix</option>
                             <option value="BILLET">Boleto</option>
                             <option value="CARD">Cartão</option>
@@ -54,7 +81,7 @@ const OffcanvasTransaction: React.FC = () => {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Categoria</Form.Label>
-                        <Form.Select {...register("category")}>
+                        <Form.Select defaultValue={transactionId?.category} {...register("category")}>
                             <option value="">Selecione</option>
                             <option value="Lazer">Lazer</option>
                             <option value="Moradia">Moradia</option>
@@ -66,10 +93,12 @@ const OffcanvasTransaction: React.FC = () => {
                         {errors.category && <span className='text-danger'>Selecione uma Categoria</span>}
                     </Form.Group>
                     <DateInput register={register} setValue={setValue} watch={watch} name='date' error={errors.date}/>
+                    
                     <BaseModal 
                         variant='modal_transition_delete'
                         button_variant='outline-danger'
-                        button_title={<>Deletar Transação <IoTrashOutline /></>}
+                        button_title={<>Deletar Transação <IoTrashOutline /></>} 
+                        _id={_id}
                     />
 
                     <UpdateStatus />

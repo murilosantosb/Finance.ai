@@ -66,37 +66,88 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
     }
 }
 
-export async function getUserTransactionsById(req: Request, res: Response): Promise<void> {
+
+export async function getUserTransactionsById(req: Request, res: Response) {
     try {
         const { googleId } = req.params;
-        const { limit } = req.query;
+        const { page = "1", limit = "10" } = req.query;
 
         const user = await UserModel.findOne({ googleId });
-         
+
         if(!user) {
-            console.error("Erro ao encontrar usuário");
-            res.status(404).json({ errors: ["Usuário não encontrado"] })
+            console.error("Erro ao encontrar usuário.");
+            res.status(404).json({ errors: ["Usuário não encontrado."] });
             return;
-        };
+        }
 
-        const transactionsLimit = Number(limit) || 10;
+        const transactionsLimit = Math.max(Number(limit), 1);
+        const currentPage = Math.max(Number(page), 1);
+        const skip = (currentPage - 1) * transactionsLimit;
 
+        const totalTransacions = await TransactionModel.countDocuments({ userId: googleId });
+        
         const userTransactions = await TransactionModel.find({ userId: googleId })
-            .limit(transactionsLimit)
             .sort({ date: -1 })
+            .skip(skip)
+            .limit(transactionsLimit)
             .exec();
 
-        if(userTransactions.length === 0) {
-            console.log("O usuário ainda não fez nenhuma transação.")
-            res.status(200).json({ message: ["O usuário não fez nenhuma transação ainda."] });
+        res.status(200).json({
+            userTransactions: userTransactions,
+            totalTransacions,
+            totalPages: Math.ceil(totalTransacions / transactionsLimit),
+            currentPage,
+            hasNextPage: skip + transactionsLimit < totalTransacions,
+            hasPrevPage: currentPage > 1,
+        })    
+
+    } catch (error) {
+        console.error("Erro ao tentar encontrar transações do usuário", error);
+        res.status(500).json({ errors: ["Erro do servidor, tente novamente!"] })
+    }
+}
+
+export const deleteTransactionById = async (req: Request, res: Response) => {
+    try {
+        const { _id } = req.params;
+        
+        const transaction = await TransactionModel.findById(_id);
+
+        if(!transaction) {
+            res.status(404).json({ message: ["A transação não foi encontrada!"] });
             return;
+        }
+
+        let updateFields: any = {};
+
+        if(transaction.financial_category === "GAIN") {
+            updateFields.$inc = { revenue: -transaction.amount };
+        }else if(transaction.financial_category === "SPENT") {
+            updateFields.$inc = { expenses: -transaction.amount };
+        }else {
+            updateFields.$inc = { investment: -transaction.amount };
         };
 
-        res.status(200).json({ userTransactions });
+        await UserModel.updateOne({ googleId: transaction.userId }, updateFields);
+
+        const category = await CategoryModel.findOne({ userId: transaction.userId, name: transaction.category });
+
+        if(!category) {
+            res.status(404).json({ message: ["A categoria não foi encontrada."] });
+            return;
+        }
+
+        await CategoryModel.updateOne(
+            { userId: transaction.userId, name: transaction.category },
+            { $inc: { amount: -transaction.amount } },
+        );
+
+        const deleteTransaction = await TransactionModel.findByIdAndDelete(_id);
+
+        res.status(200).json({ message: ["Transação excluída com sucesso"], transaction: deleteTransaction });
         return;
     } catch (error) {
-        console.error("Erro ao tenta encontrar transações do usuário:", error);
-        res.status(500).json({ errors: ["Erro do servidor, tente novamente!"] });
+        res.status(500).json({ errors: ["Erro do servidor, tente novamente!"], error });
         return;
     }
 }

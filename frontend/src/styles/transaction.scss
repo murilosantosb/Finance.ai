@@ -32,9 +32,6 @@ header.transacion-header {
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
-
-    width: 100%;
-    max-width: 110px;
     font-weight: bolder;
     border-radius: 15px;
 
@@ -48,6 +45,7 @@ header.transacion-header {
 .badge-primary {
     background-color: #0f190c !important;
     color: $green !important;
+    width: 70px;
 
     div.badge-circle {
         background-color: $green !important;
@@ -57,6 +55,7 @@ header.transacion-header {
 .badge-secondary {
     background-color: #1d0e10 !important;
     color: $red !important;
+    width: 70px;
 
     div.badge-circle {
         background-color: $red !important;
@@ -66,6 +65,7 @@ header.transacion-header {
 .badge-tertialy {
     background-color: #1e1e20 !important;
     color: white !important;
+    width: 105px;
 
     div.badge-circle {
         background-color: white !important;
@@ -90,19 +90,13 @@ header.transacion-header {
         background-color: #131315 !important;
     }
 
+
     tr , td {
+        height: 50px;
         color: white;
         padding: 10px;
     }
 
-    td.td-icons-container {
-        display: flex;
-        height: 50px;
-        align-items: center;
-        justify-content: center;
-        gap: 15px;
-        
-    }
 
     td.data, .td-icons {
         color: $gray;
@@ -115,12 +109,6 @@ header.transacion-header {
         display: flex;
     }
 
-
-    @media (max-width: 936px) {
-        td.td-icons-container {
-            height: 100px;     
-        }
-    }
 }
 
 // OffCanvas de Edição de transações

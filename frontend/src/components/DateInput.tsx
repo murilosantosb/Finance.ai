@@ -13,9 +13,10 @@ interface DateInputProps<T extends FieldValues> {
   register: UseFormRegister<T>;
   setValue: UseFormSetValue<T>;
   watch: UseFormWatch<T>;
+  default?: string | Date;
 }
 
-const DateInput = <T extends FieldValues>({ name, error, register, setValue, watch }: DateInputProps<T>) => {
+const DateInput = <T extends FieldValues>({ name, error, register, setValue, watch}: DateInputProps<T>) => {
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     useEffect(() => {
@@ -31,6 +32,7 @@ const DateInput = <T extends FieldValues>({ name, error, register, setValue, wat
       <span>
         <FaRegCalendarAlt />
         <DatePicker 
+          
           selected={selectedDate}
           onChange={(date: Date | null) => {
             setSelectedDate(date);

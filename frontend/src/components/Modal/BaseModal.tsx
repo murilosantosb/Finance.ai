@@ -13,16 +13,23 @@ interface BaseModalPropss {
   "create_transition" |
   "IA";
 
-  button_title?: React.ReactNode;
   button_variant: string;
+  button_title?: React.ReactNode;
+  _id?: string;
 }
 
 
 const BaseModal: React.FC<BaseModalPropss> = (props) => {
   const [show, setShow] = useState(false);
+  const [modalVariant, setModalVariant] = useState(props.variant);
 
-  const handleClose = () => setShow(false);
+  const handleClose = () => {
+    setShow(false);
+    setModalVariant(props.variant);
+  };
+
   const handleShow = () => setShow(true);
+
 
   return (
     <>
@@ -30,14 +37,23 @@ const BaseModal: React.FC<BaseModalPropss> = (props) => {
         {props.button_title}
       </Button>
 
-      <Modal dialogClassName='modal-container' centered show={show} onHide={handleClose}>
+      <Modal
+       dialogClassName="modal-container"
+       className='d-flex'
+       centered show={show} onHide={handleClose}
+       >
         <section>
-            {props.variant === "IA" ? (
+            {modalVariant === "IA" ? (
               <ModalOpenIA handleClose={handleClose}/> 
-            ) : props.variant === "create_transition" ? (
+            ) : modalVariant === "create_transition" ? (
               <AddTransactionModal handleClose={handleClose}/>
-            ) : props.variant === "modal_transition_delete" ? (
-              <DeleteTransactionModal variant='modal_delete' handleClose={handleClose}/> 
+            ) : modalVariant === "modal_transition_delete" ? (
+              <DeleteTransactionModal
+               _id={props._id}
+               variant='modal_delete'
+               handleClose={handleClose}
+               onDeleteSuccess={() => setModalVariant("modal_delete_confirm")}
+               /> 
             ) : (
               <DeleteTransactionModal variant='modal_alert' handleClose={handleClose}/>
             )

@@ -5,7 +5,7 @@
 
 .modal-container {
     width: 100%;
-    max-width: 400px;
+    // max-width: 400px;
     height: auto;
     max-height: 80vh; 
     border: none;
@@ -20,6 +20,7 @@
         filter: invert(1);
     }
 }
+
 
 .modal-header {
     display: flex;
@@ -41,7 +42,6 @@
 }
 
 .modal-footer {
-    flex-shrink: 0;
     display: flex;
     gap: 10px;
     width: 100%;
@@ -49,8 +49,8 @@
 
 .modal-btn {
     display: flex;
-    align-items: center;
-    gap: 5px;
+    align-items: center ;
+    gap: 10px;
 }
 
 
@@ -83,7 +83,7 @@
 .modal-footer {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-end;
 
     button {
         width: 150px;
