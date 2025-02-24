@@ -70,7 +70,7 @@ export async function createTransaction(req: Request, res: Response): Promise<vo
 export async function getUserTransactionsById(req: Request, res: Response) {
     try {
         const { googleId } = req.params;
-        const { page = "1", limit = "10" } = req.query;
+        const { page = "1", limit = "14" } = req.query;
 
         const user = await UserModel.findOne({ googleId });
 
@@ -91,11 +91,11 @@ export async function getUserTransactionsById(req: Request, res: Response) {
             .skip(skip)
             .limit(transactionsLimit)
             .exec();
-
+            
         res.status(200).json({
             userTransactions: userTransactions,
-            totalTransacions,
             totalPages: Math.ceil(totalTransacions / transactionsLimit),
+            totalTransacions,
             currentPage,
             hasNextPage: skip + transactionsLimit < totalTransacions,
             hasPrevPage: currentPage > 1,

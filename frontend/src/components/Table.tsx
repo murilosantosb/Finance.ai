@@ -10,9 +10,11 @@ import BadgeComponent from './Badge';
 import { Table } from "react-bootstrap";
 import OffcanvasTransaction from './Modal/OffcanvasTransaction';
 import BaseModal from './Modal/BaseModal';
+import PaginationComponent from './PaginationComponent';
 
 // Store
 import transactionStore from '@/store/transactionStore';
+import pagesStore from '../store/pagesStore';
 
 // Icons
 import { IoTrashOutline } from "react-icons/io5";
@@ -22,32 +24,35 @@ import { formatDate } from "@/utils/formatDate";
 import realToCents from '@/utils/realToCents';
 
 // Types
-import { TransactionItemProps } from '@/interfaces/transactionType';
+import { TransactionsResponse } from '@/interfaces/transactionType';
 
 
 const TableComponent: React.FC = () => {
-    const [hasFetched, setHasFetched] = useState(false);
+    const [lastFetchedPage, setLastFetchedPage] = useState<number | null>(null);
+    const [totalPages, setTotalPages] = useState<number | undefined>(1);
     const { transactions, setTransactions } = transactionStore();
+    const { page } = pagesStore();
     const { data: user } = useSession();
     
-    const { data, refetch: getUserTransactions } = useFetch<{userTransactions: TransactionItemProps[]}>({
-            endpoint: user?.user.googleId ? `/transaction/user/${user?.user.googleId}?limit=14` : "",
+    const { data, refetch: getUserTransactions } = useFetch<TransactionsResponse>({
+            endpoint: user?.user.googleId ? `/transaction/user/${user?.user.googleId}?page=${page}&limit=14` : "",
             method: "GET",
             autoFetch: false,
     });
 
     useEffect(() => {
-        if(user?.user.googleId && !hasFetched) {
+        if(user?.user.googleId && page && page !== lastFetchedPage) {
             getUserTransactions();
-            setHasFetched(true);
+            setLastFetchedPage(page);
         }
-    }, [getUserTransactions, hasFetched, user?.user.googleId])
+    }, [getUserTransactions, user?.user.googleId, page, lastFetchedPage])
 
     useEffect(() => {
         if(data?.userTransactions) {
             setTransactions(data.userTransactions);
+            setTotalPages(data.totalPages);
         }
-    }, [data?.userTransactions, setTransactions])
+    }, [data?.userTransactions, setTransactions, data?.totalPages])
 
   return (
     <>
@@ -68,7 +73,6 @@ const TableComponent: React.FC = () => {
                 {transactions && transactions.length ? (
                     transactions.map((transaction) => (
                             
-                 
                     <tr key={transaction._id}>
                         <td>{transaction.title}</td>
                         <td>
@@ -101,6 +105,8 @@ const TableComponent: React.FC = () => {
                 )}
             </tbody>
         </Table>
+            
+           <PaginationComponent totalPages={Number(totalPages)}/>
     </>
   )
 }

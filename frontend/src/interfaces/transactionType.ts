@@ -1,3 +1,4 @@
+
 export interface TransactionItemProps {
     title: string;
     payment_method: "PIX" | "CARD" | "BILLET"; 
@@ -6,5 +7,15 @@ export interface TransactionItemProps {
     amount: number | null | undefined;
     category: "Moradia" | "Alimentação" | "Transporte" | "Saúde" | "Lazer" | "Outros";
     userId?: string | undefined;
-    _id?: string; 
+    _id?: string;
 }  
+
+
+export interface TransactionsResponse {
+    userTransactions: TransactionItemProps[];
+    totalTransactions?: number;
+    totalPages?: number;
+    currentPage?: number;
+    hasNextPage?: boolean;
+    hasPrevPage?: boolean;
+}

@@ -29,6 +29,14 @@ $table-hover-bg: $dark-green;
 $btn-close-color: #ffffff;
 $btn-close-opacity: 1;
 
+$pagination-color: #ffffff; 
+$pagination-bg: $dark-green; 
+$pagination-border-color: $gray; 
+$pagination-hover-color: #ffffff; 
+$pagination-hover-bg: #111111; 
+$pagination-hover-border-color: $gray; 
+$pagination-active-color: #ffffff;
+$pagination-active-bg: #111111; 
 
 
 @import "bootstrap/scss/bootstrap";
