@@ -29,7 +29,7 @@ const OffcanvasTransaction: React.FC<OffCanvasProps> = ({ _id }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
-    const { register, errors, onSubmit, handleSubmit, setValue, watch } = useTransactionUpdateForm();
+    const { register, errors, onSubmit, handleSubmit, setValue, watch } = useTransactionUpdateForm(_id);
     const amount = Number(transactionId?.amount) / 100;
 
     useEffect(() => {

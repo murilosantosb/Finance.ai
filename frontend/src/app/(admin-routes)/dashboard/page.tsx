@@ -5,7 +5,7 @@ import Wrapper from "@/components/Wrapper";
 import FinanceChart from "@/components/Cards/FinanceChart";
 import ExpenseCategoryProgress from "@/components/Cards/ExpenseCategoryProgress";
 import TransactionMonthSelector from "@/components/Cards/TransactionMonthSelector";
-import DropdownButtonComponent from "@/components/DropdownButton";
+// import DropdownButtonComponent from "@/components/DropdownButton";
 import BaseModal from "@/components/Modal/BaseModal";
 
 //Icons
@@ -23,7 +23,8 @@ export default function Dashboard() {
          button_variant="outline-light" 
          variant="IA"
          /> 
-        <DropdownButtonComponent />  
+         {/* Em uma atualização futura , fazer atualização dos dados com base no mês */}
+        {/* <DropdownButtonComponent />   */}
       </span> 
     </header>
     <main className="dashboard-container">

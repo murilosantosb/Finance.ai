@@ -61,6 +61,7 @@ const TransactionMonthSelector: React.FC = () => {
             financial_category={transaction.financial_category}
             date={transaction.date}
             amount={transaction.amount}
+            category={transaction.category}
             />
           ))
         ) : (

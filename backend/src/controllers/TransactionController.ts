@@ -2,6 +2,7 @@ import UserModel from "../models/User";
 import TransactionModel from "../models/Transaction";
 import CategoryModel from "../models/Category";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 
 export async function createTransaction(req: Request, res: Response): Promise<void> {
     try {
@@ -151,3 +152,189 @@ export const deleteTransactionById = async (req: Request, res: Response) => {
         return;
     }
 }
+
+
+
+export const updateTransactionById = async (req: Request, res: Response): Promise<void> => {
+    const session = await mongoose.startSession();
+
+    try {
+        const { _id } = req.params;
+        const { title, category, amount, payment_method, date } = req.body;
+
+        session.startTransaction();
+
+        const transaction = await TransactionModel.findById(_id).session(session);
+        if(!transaction) {
+            res.status(404).json({ message: ["A transação não foi encontrada."] });
+            return;
+        }
+
+        // Valores antigos
+        const oldAmount = transaction.amount;
+        const oldCategory = transaction.category;
+        const financialCategory = transaction.financial_category;
+        const userId = transaction.userId;
+
+        // Ajustando dados financeiros do usuário
+        let balanceUpdate: number = 0;
+        let revenueUpdate: number = 0;
+        let expensesUpdate: number = 0;
+        let investmentUpdate: number = 0;
+
+        const amountDifference = amount - oldAmount;
+
+        if(financialCategory === "GAIN") {
+            balanceUpdate = amountDifference;
+            revenueUpdate = amountDifference;
+        }else if(financialCategory === "SPENT") {
+            balanceUpdate = -amountDifference;
+            expensesUpdate = amountDifference;
+        }else {
+            balanceUpdate = -amountDifference;
+            investmentUpdate = amountDifference;
+        }
+
+        await UserModel.updateOne(
+            { googleId: userId },
+            {
+                $inc: {
+                    balance: balanceUpdate,
+                    revenue: revenueUpdate,
+                    expenses: expensesUpdate,
+                    investment: investmentUpdate,
+                }
+            }
+        ).session(session);
+
+        // Atualizando categorias
+        if(oldCategory !== category) {
+            await CategoryModel.updateOne(
+                { userId, name: oldCategory },
+                { $inc: { amount: -oldAmount } }
+            ).session(session);
+
+            await CategoryModel.updateOne(
+                { userId, name: category },
+                { $inc: { amount: amount } },
+                { upsert: true }
+            ).session(session);
+
+        }else if(oldAmount !== amount) {
+            await CategoryModel.updateOne(
+                { userId, name: category },
+                { $inc: { amount: amountDifference } }
+            ).session(session);
+        }
+
+        const updateTransaction = {
+            title,
+            category,
+            amount,
+            payment_method,
+            date,
+        };
+
+        await TransactionModel.findByIdAndUpdate(_id, updateTransaction).session(session);
+
+        await session.commitTransaction();
+        session.endSession();
+
+        res.status(200).json({ message: "Transação atualizada com sucesso", transaction: updateTransaction });
+        return;
+    } catch (error) {
+        await session.abortTransaction();
+        session.endSession();
+        res.status(500).json({ errors: ["Erro no servidor, tente novamente!"], error });
+        return;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export const updateTransactionById = async (req: Request, res: Response): Promise<void> => {
+//     try {
+//         const { _id } = req.params;
+//         const { title, category, amount, payment_method, date } = req.body;
+
+//         const session = await mongoose.startSession();
+//         session.startTransaction();
+
+//         const transaction = await TransactionModel.findById(_id);
+
+//         if(!transaction) {
+//             res.status(404).json({ message: ["A transação não foi encontrada."] });
+//             return;
+//         };
+
+//         let updateFields: any = {};
+//         let newAmount = transaction.amount - amount;
+
+//        if(transaction.amount !== amount) {
+//         if(transaction.financial_category === "GAIN") {
+//             if(transaction.amount < amount) {
+//                 updateFields.$inc = { balance: newAmount, revenue: newAmount };
+//             };
+//             updateFields.$inc = { balance: -newAmount, revenue: -newAmount};
+//         }else if(transaction.financial_category === "SPENT") {
+//             if(transaction.amount < amount) {
+//                 updateFields.$inc = { balance: -newAmount, expenses: newAmount };
+//             };
+//             updateFields.$inc = { balance: newAmount, expenses: -newAmount };
+//         }else{
+//             if(transaction.amount < amount) {
+//                 updateFields.$inc = { balance: -newAmount, investment: newAmount };
+//             }
+//             updateFields.$inc = { balance: newAmount, investment: -newAmount };
+//         };
+//        };
+
+//         await TransactionModel.updateOne({ _id: _id }, updateFields);
+
+//         await CategoryModel.updateOne(
+//             { userId: transaction.userId, name: transaction.category },
+//             { $inc: { amount: -transaction.amount } },
+//         );
+
+//         await CategoryModel.updateOne(
+//             { userId: transaction.userId, name: category },
+//             { $inc: { amount: amount } },
+//             { upsert: true },
+//         );
+
+//         const updateTransaction = {
+//             title,
+//             category,
+//             amount,
+//             payment_method,
+//             date,
+//         }
+
+//         await TransactionModel.findByIdAndUpdate(_id, updateTransaction);
+
+//         res.status(200).json({ message: "Transação atualizada com sucesso", transaction: updateTransaction });
+//         return;
+//     } catch (error) {
+//         res.status(500).json({ errros: ["Erro no servido tente mais tarde!"], error });
+//         return;
+//     }
+// }

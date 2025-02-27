@@ -119,9 +119,43 @@ main.dashboard-container {
         font-size: 2em;
     }
 
-    @media(max-width: 500px) {
-        height: 250px;
+    @media(max-width: 513px) {
+        height: 200px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
 
+
+        div {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            button {
+                width: 100%;
+            }
+        }
+        div > strong {
+            font-size: 1.5em;
+        }
+    }
+
+
+    @media(max-width: 560px) {
+        height: 200px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+
+        div {
+            display: flex;
+            gap: 15px;
+
+            button {
+                width: 100%;
+            }
+        }
         div > strong {
             font-size: 1.5em;
         }
@@ -132,11 +166,19 @@ main.dashboard-container {
     @include card-info(500px, 126px, 20px, 32px 24px);
     background-color: $dark-green;
     grid-column: span 1;
+
+    @media (max-width: 700px) {
+        @include card-info(100%, 126px, 20px, 32px 24px);
+    }
 }
 
 .card-info-tertialy {
     background-color: transparent;
     @include card-info(400px, 126px, 20px, 32px 24px);
+
+    @media (max-width: 700px) {
+        @include card-info(100%, 126px, 20px, 32px 24px);
+    }
 }
 
 .financial-info-card {
@@ -186,11 +228,10 @@ main.dashboard-container {
     gap: 20px;
     margin-top: 18px;
 
-    @media (max-width: 580px) {
+    @media (max-width: 700px) {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        
     }
 }
 

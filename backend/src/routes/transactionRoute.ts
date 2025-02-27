@@ -4,13 +4,13 @@ const routes = express.Router();
 
 
 // Controllers
-import { createTransaction, getUserTransactionsById, deleteTransactionById } from "../controllers/TransactionController";
+import { createTransaction, getUserTransactionsById, deleteTransactionById, updateTransactionById } from "../controllers/TransactionController";
 
 // Middlewares
 import { validateDataSchema } from "../middlewares/validate";
 
 // Schema
-import { transactionSchema } from "../schemas/transactionSchema";
+import { transactionSchema, updateTransactionSchema } from "../schemas/transactionSchema";
 
 
 // Routes
@@ -18,6 +18,6 @@ import { transactionSchema } from "../schemas/transactionSchema";
 routes.post("/create", validateDataSchema(transactionSchema), createTransaction);
 routes.get("/user/:googleId", getUserTransactionsById);
 routes.delete("/:_id", deleteTransactionById);
-
+routes.patch("/:_id", validateDataSchema(updateTransactionSchema), updateTransactionById);
 
 export default routes;

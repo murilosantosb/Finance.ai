@@ -7,7 +7,7 @@ import { updatedTransactionSchema } from "@/schemas/transactionSchema";
 import { z } from "zod";
 
 //Types
-// import { TransactionItemProps } from "@/interfaces/transactionType";
+import { TransactionsResponse } from "@/interfaces/transactionType";
 
 // Utils
 import realToCents from "@/utils/realToCents";
@@ -15,16 +15,17 @@ import realToCents from "@/utils/realToCents";
 // Hooks
 import { useSession } from "next-auth/react";
 import { setGlobalStatusMessage } from "./useStatusMessage";
-// import transactionStore from "@/store/transactionStore";
-// import { useFetch } from "./useFetch";
-// import { useEffect, useState } from "react";
+import transactionStore from "@/store/transactionStore";
+import { useFetch } from "./useFetch";
+import pagesStore from "@/store/pagesStore";
 
 
 type FormData = z.infer<typeof updatedTransactionSchema>;
 
-export const useTransactionUpdateForm = () => {
+export const useTransactionUpdateForm = (_id: string | undefined) => {
     const { data: user } = useSession();
-    // const { setTransactions } = transactionStore();
+    const { setTransactions } = transactionStore();
+    const { page } = pagesStore();
 
     const {
         register,
@@ -43,15 +44,17 @@ export const useTransactionUpdateForm = () => {
         }
     })
 
-    // const { data, refetch: getUserTransactions } = useFetch<{userTransacions: TransactionItemProps[]}>({
-    //     endpoint: `/transacion/user/${user?.user.googleId}`,
-    //     method: "GET",
-    //     autoFetch: false,
-    // })
+    const { refetch: updateTransaction } = useFetch({
+        endpoint: _id ? `/transaction/${_id}` : "",
+        method: "PATCH",
+        autoFetch: false,
+    })
 
-    
-
-    
+    const { refetch: getUserTransactions } = useFetch<TransactionsResponse>({
+        endpoint: `/transaction/user/${user?.user.googleId}?page=${page}`,
+        method: "GET",
+        autoFetch: false,
+    })
 
     const onSubmit = async (data: FormData) => {
         try {
@@ -70,6 +73,16 @@ export const useTransactionUpdateForm = () => {
             };
 
             console.log("Dados atualizados:", updatedData);
+
+            const { data: responseData } = await updateTransaction(updatedData);
+
+            if(responseData) {
+                const updatedUserData = await getUserTransactions();
+
+                if(updatedUserData.data?.userTransactions) {
+                    setTransactions(updatedUserData.data.userTransactions);
+                }
+            };
 
             setGlobalStatusMessage("success");
             

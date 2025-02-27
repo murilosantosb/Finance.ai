@@ -30,7 +30,7 @@ export const useTransactionForm = (onSuccess: () => void) => {
     const { setUserCategories } = categoriesStore();
 
     const { refetch } = useFetch<{ userTransactions: TransactionItemProps[] }>({
-        endpoint: user?.user.googleId ? `/transaction/user/${user.user.googleId}` : "",
+        endpoint: user?.user.googleId ? `/transaction/user/${user.user.googleId}?limit=12` : "",
         method: "GET",
         autoFetch: false,
     });
