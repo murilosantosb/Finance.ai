@@ -4,6 +4,10 @@ import Login from "@/components/Login";
 import Image from "next/image";
 import { Container } from "react-bootstrap"
 
+export const metadata = {
+  title: "Login",
+}
+
 export default function Home() {
   return (
    <div className="d-flex">

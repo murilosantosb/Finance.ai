@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 // Components
 import Wrapper from "@/components/Wrapper";
@@ -8,6 +8,10 @@ import TableComponent from "@/components/Table";
 
 // Icons
 import { LuArrowUpDown } from "react-icons/lu";
+
+export const metadata = {
+   title: "Transações",
+}
 
 export default function Transaction() {
     return (

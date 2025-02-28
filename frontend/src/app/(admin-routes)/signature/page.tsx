@@ -3,6 +3,10 @@
 import Wrapper from "@/components/Wrapper";
 import SubscriptionCard from "@/components/Cards/SubscriptionCard";
 
+export const metadata = {
+  title: "Assinaturas",
+}
+
 
 export default function Signature() {
     return (

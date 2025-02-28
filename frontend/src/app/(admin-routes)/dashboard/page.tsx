@@ -11,6 +11,10 @@ import BaseModal from "@/components/Modal/BaseModal";
 //Icons
 import { FiFileText } from "react-icons/fi";
 
+export const metadata = {
+  title: "Dashboard",
+}
+
 export default function Dashboard() {
 
     return (
