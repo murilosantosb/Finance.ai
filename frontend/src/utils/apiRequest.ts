@@ -1,7 +1,10 @@
 import { apiRequestProps } from "@/interfaces/apiType";
 
+// URL PRODUÇÃO : https://finance-ai-api.onrender.com/
+// URL DEV https://localhost:5000/api"
+
 async function apiRequest<T>({ endpoint, method, body, autoFetch = true }: apiRequestProps<T | null>) {
-    const baseUrl = "http://localhost:5000/api";
+    const baseUrl = "https://finance-ai-api.onrender.com/api";
     const url = `${baseUrl}${endpoint}`;
 
     const options: RequestInit = {
