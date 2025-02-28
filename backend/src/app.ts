@@ -10,7 +10,7 @@ const PORT = 5000;
 
 // Middlewares
 app.use(express.json());
-app.use(cors({credentials: true, origin: ["http://localhost:3000", "http://localhost:3001", "https://finance-ai-one-theta.vercel.app/"]}));
+app.use(cors({credentials: true, origin: ["http://localhost:3000", "http://localhost:3001", "https://finance-ai-five-puce.vercel.app"]}));
 
 // DB
 conn();
