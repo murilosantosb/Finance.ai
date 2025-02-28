@@ -32,6 +32,8 @@ export interface UserState {
             revenue: number;
             expenses: number;
         };
+        financialVisibility: "visible" | "invisible";
+        setFinancialVisibility: (status: "visible" | "invisible") => void;
         getUserData: (user: UserProps | null) => void;
         getFinanceOfUser: (finance: UserFinanceProps | null) => void;
 };

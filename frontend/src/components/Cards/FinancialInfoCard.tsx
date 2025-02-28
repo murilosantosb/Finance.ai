@@ -4,6 +4,9 @@ import React from 'react'
 import Icon from '../Icon'
 import { BsFillEyeFill } from "react-icons/bs";
 
+// Hooks
+import useToggleFinancialVisibility from '@/hooks/useToggleFinancialVisibility';
+
 type FinancialInfoCardProps = {
     title: string;
     amount: number | string;
@@ -15,6 +18,7 @@ type FinancialInfoCardProps = {
 }
 
 const FinancialInfoCard: React.FC<FinancialInfoCardProps> = ({ title, amount, icon, button,variant, iconOptional, background_icons }) => {
+  const { financialVisibility, toggleVisibility } = useToggleFinancialVisibility();
 
 
   return (
@@ -26,8 +30,8 @@ const FinancialInfoCard: React.FC<FinancialInfoCardProps> = ({ title, amount, ic
 
          <div>
             <strong className='d-flex align-items-center gap-2'>
-                {amount}
-                {iconOptional && <BsFillEyeFill size={25}/>}
+                {financialVisibility === "visible" ? amount : "****"}
+                {iconOptional && <BsFillEyeFill size={25} onClick={toggleVisibility}/>}
             </strong>
 
             {button}

@@ -13,8 +13,8 @@ import { userSchema } from "../schemas/userSchema";
 
 // Routes
 
-router.post("/login", validateDataSchema(userSchema), login)
-router.get("/:googleId", getUserById)
-router.get("/finances/:googleId", getFinanceOfUser)
+router.post("/login", validateDataSchema(userSchema), login);
+router.get("/:googleId", getUserById);
+router.get("/finances/:googleId", getFinanceOfUser);
 
 export default router;

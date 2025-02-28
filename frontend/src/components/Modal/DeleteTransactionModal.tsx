@@ -6,10 +6,11 @@ import { useFetch } from '@/hooks/useFetch';
 import { useSession } from 'next-auth/react';
 import transactionStore from '@/store/transactionStore';
 import userStore from '@/store/userStore';
+import pagesStore from '@/store/pagesStore';
 
 // Types
 import { ModalProps } from '@/interfaces/modalType';
-import { TransactionItemProps } from "@/interfaces/transactionType";
+import { TransactionsResponse } from "@/interfaces/transactionType";
 import { UserFinanceProps } from '@/interfaces/userType';
 // Components
 import { Modal, Button } from 'react-bootstrap';
@@ -27,6 +28,7 @@ const DeleteTransactionModal: React.FC<DeleteModalProps> = (props) => {
   const { data: user } = useSession();
   const { setTransactions } = transactionStore();
   const { getFinanceOfUser } = userStore();
+  const { page } = pagesStore();
 
   const { refetch: deleteTransaction } = useFetch({
     endpoint: `/transaction/${props._id}`,
@@ -34,8 +36,8 @@ const DeleteTransactionModal: React.FC<DeleteModalProps> = (props) => {
     autoFetch: false,
   })
 
-  const { refetch: getUserTransactions } = useFetch<{ userTransactions: TransactionItemProps[] }>({
-    endpoint: user?.user.googleId ? `/transaction/user/${user?.user.googleId}` : "",
+  const { refetch: getUserTransactions } = useFetch<TransactionsResponse>({ //{ userTransactions: TransactionItemProps[] }
+    endpoint: user?.user.googleId ? `/transaction/user/${user?.user.googleId}?page=${page}` : "",
     method: "GET",
     autoFetch: false,
   })

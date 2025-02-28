@@ -1,0 +1,118 @@
+@use "globals" as *;
+
+// Signature Container
+
+main.signature-container {
+
+    section {
+        display: flex;  
+        gap: 15px;
+        
+    }
+
+
+    @media (max-width: 800px) {
+        section {
+            display: flex;
+            flex-direction: column; 
+        }
+    }
+}
+
+
+// Subscription Card
+
+section.subscription-card-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    
+    color: white;
+    border: 2px solid $dark-gray;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 451px;
+    height: 500px;
+
+
+    div.subscription-header {
+        display: flex;
+        justify-content: center;
+
+        border-bottom: 2px solid $dark-gray;
+        padding: 20px;
+
+        span {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 15px;
+            
+           span.subscription-header-plan {
+            display: flex;
+            align-items: center;
+            grid-column-start: span 2;
+
+            p.subscription-plan {
+                margin: 0 auto;
+                font-size: 32px;
+                font-weight: 600;
+                color: white;
+            }
+           }
+
+           span.subscription-header-price {
+                grid-column-start: span 2;
+                margin: 0 auto;
+           }
+
+            strong {
+                font-size: 45px;
+            }
+
+            p {
+                color: $gray;
+                font-size: 25px;
+            }
+        }
+    }
+
+    section.subscription-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px 50px;
+
+        span {
+            display: flex;
+            gap: 10px;
+        }
+    }
+
+    button {
+        border-radius: 30px;
+        max-width: 371px;
+        width: 100%;
+        height: 44px;
+        margin: 0 auto;
+        margin-top: 15px;
+    }
+
+    svg {
+        font-size: 25px;
+    }
+
+    span.subscription-badge {
+        padding-left: 12px;
+        background-color: $off-green;
+        color: $green;
+        font-size: 18px;
+        font-weight: 500;
+        border-radius: 20px;
+        width: 70px;
+        height: 28px;
+    }
+}

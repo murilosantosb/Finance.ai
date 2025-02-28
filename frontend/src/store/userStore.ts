@@ -14,6 +14,11 @@ const userStore = create<UserState>((set) => ({
         revenue: 0,
         expenses: 0,
     },
+    financialVisibility: "visible",
+
+    setFinancialVisibility: (status) => set({
+        financialVisibility: status,
+    }),
 
     getUserData: (user) => set((state) => ({
         user: { ...state.user, ...user },
