@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+require("dotenv").config();
+
 const DB_USER = process.env.DB_USER;
 const DB_USER_PASSWORD = process.env.DB_USER_PASSWORD;
 
