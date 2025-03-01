@@ -39,7 +39,7 @@ Deploy: Render && Vercel
 1. Clone o repositório
    
 ```bash
-git clone https://github.com/seu-usuario/finance-ai.git
+git clone https://github.com/murilosantosb/finance-ai.git
 cd finance-ai
 ```
 
