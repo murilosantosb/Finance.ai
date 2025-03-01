@@ -41,7 +41,7 @@ const FinanceChart: React.FC = () => {
                       <Icon size={25} variant="graph_up_arrow" background_color='background-icon-secondary-revenue'/>
                       <p>Ganhos</p>
                     </span>
-                    <strong>{percentages.gain}%</strong>
+                    <strong>{percentages.gain ? percentages.gain : 0}%</strong>
                 </div>
 
                 <div>
@@ -49,7 +49,7 @@ const FinanceChart: React.FC = () => {
                       <Icon size={25} variant='graph_down_arrow' background_color='background-icon-secondary-expenses'/>
                       <p>Gastos</p>
                     </span>
-                    <strong>{percentages.spent}%</strong>
+                    <strong>{percentages.spent ? percentages.spent : 0}%</strong>
                 </div>
 
                 <div>
@@ -57,7 +57,7 @@ const FinanceChart: React.FC = () => {
                     <Icon size={25} variant='piggy_bank' background_color='background-icon-tertialy'/>
                     <p>Investimentos</p>
                    </span>
-                   <strong>{percentages.investment}%</strong>
+                   <strong>{percentages.investment ? percentages.investment: 0}%</strong>
                 </div>
 
             </section>

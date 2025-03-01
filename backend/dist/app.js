@@ -12,7 +12,7 @@ const app = (0, express_1.default)();
 const PORT = 5000;
 // Middlewares
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ credentials: true, origin: ["http://localhost:3000", "http://localhost:3001"] }));
+app.use((0, cors_1.default)({ credentials: true, origin: ["http://localhost:3000", "http://localhost:3001", "https://finance-ai-five-puce.vercel.app"] }));
 // DB
 (0, db_1.default)();
 // Route

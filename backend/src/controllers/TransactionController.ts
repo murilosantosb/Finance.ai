@@ -4,65 +4,68 @@ import CategoryModel from "../models/Category";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
+
 export async function createTransaction(req: Request, res: Response): Promise<void> {
+    const session = await mongoose.startSession();
+    
     try {
         const { title, userId, financial_category, category, amount, payment_method, date } = req.body;
+        session.startTransaction();
 
-        const user = await UserModel.findOne({ googleId: userId });
-        
-        if(!user) {
+        const user = await UserModel.findOne({ googleId: userId }).session(session);
+        if (!user) {
             res.status(404).json({ errors: ["Usuário não encontrado!"] });
             console.error("Não foi possível identificar o usuário.");
             return;
-        };
+        }
 
         let updateFields: any = {};
-
-        if(financial_category === "GAIN") {
-           updateFields.$inc = { balance: amount, revenue: amount };
-        }else if(financial_category === "SPENT") {
+        if (financial_category === "GAIN") {
+            updateFields.$inc = { balance: amount, revenue: amount };
+        } else if (financial_category === "SPENT") {
             updateFields.$inc = { balance: -amount, expenses: amount };
-        }else if (financial_category === "INVESTMENT") {
+        } else if (financial_category === "INVESTMENT") {
             updateFields.$inc = { balance: -amount, investment: amount };
-        };
+        }
 
-        await UserModel.updateOne({ googleId: userId }, updateFields);
+        await UserModel.updateOne({ googleId: userId }, updateFields).session(session);
 
-        if(!category) {
+        if (!category) {
             res.status(400).json({ errors: ["A categoria é obrigatória!"] });
             return;
         }
 
-        let existingCategory = await CategoryModel.findOne({ userId, name: category });
+        let existingCategory = await CategoryModel.findOne({ userId: userId, name: category }).session(session);
 
         if(!existingCategory) {
-            existingCategory = await CategoryModel.create({
-                userId,
-                amount,
-                name: category.trim(),
+            await CategoryModel.create({
+                userId: userId,
+                amount: amount,
+                name: category,
             })
         }else {
             await CategoryModel.updateOne(
                 { userId: userId, name: category },
                 { $inc: { amount: amount } },
-            );
+            ).session(session);
         };
+        
+        // Criar transação
+        const newTransaction = await TransactionModel.create(
+            [{ userId, title, financial_category, category, amount, payment_method, date }],
+            { session }
+        );
 
-        const newTransaction = await TransactionModel.create({
-            userId,
-            title,
-            financial_category,
-            category,
-            amount,
-            payment_method,
-            date,
-        });
+        await session.commitTransaction();
+        session.endSession();
 
-        res.status(201).json({ message: "Transição criada com sucesso.", newTransaction});
+        res.status(201).json({ message: "Transação criada com sucesso.", newTransaction });
         return;
     } catch (error) {
-        console.error("Não foi possível criar a transição.", error);
-        res.status(500).json({ errors: ["Erro do servido, tente novamente!"]});
+        await session.abortTransaction();
+        session.endSession();
+        console.error("Não foi possível criar a transação.", error);
+        res.status(500).json({ errors: ["Erro no servidor, tente novamente!"] });
         return;
     }
 }
