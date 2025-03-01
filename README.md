@@ -1,3 +1,5 @@
+![Nome da Imagem](./frontend/public/images/site-login.png)
+
 # Finance AI
 
 ### Finance AI é uma aplicação web desenvolvida para ajudar no gerenciamento financeiro pessoal, oferecendo um dashboard intuitivo com informações detalhadas sobre saldo, investimentos, receitas, despesas e transações.
