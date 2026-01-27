@@ -13,7 +13,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.7",
     "date-fns": "^4.1.0",
-    "next": "15.1.5",
+    "next": "15.1.11",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.8",
