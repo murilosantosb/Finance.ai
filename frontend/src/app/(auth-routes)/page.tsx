@@ -20,6 +20,7 @@ export default function Home() {
             width={900}
             height={960}
             alt='Imagem login fundo'
+            priority
           />
       </div>
    </div>

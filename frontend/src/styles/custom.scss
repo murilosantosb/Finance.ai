@@ -1,42 +1,43 @@
-@use "globals.scss" as *;
+@use "globals";
 
-$primary: $green;
-$secondary: $dark-gray;
-$info: $gray; 
-$modal-content-bg: $bg-secondary; 
-$modal-content-color: #FFFFFF;
-$modal-header-border-color: none;
-$modal-body-border-color: none;
-$modal-footer-border-color: none;
-$modal-content-border-radius: 20px;
-$modal-btn-close-color: white;
+@use "bootstrap/scss/bootstrap" with (
+    $green: globals.$green,
+    $red: globals.$red,
+    $white: globals.$white,
+    $primary: globals.$green,
+    $secondary: globals.$dark-gray,
+    $info: globals.$gray,
 
-$input-bg: $bg-secondary;
-$input-border-color: $dark-gray;
-$input-border-radius: 15px;
-$input-color: $light-gray;
-$input-focus-border-color: $bg-primary;
-$input-placeholder-color: $gray;
-$input-border-width: 2px;
+    $modal-content-bg: globals.$bg-secondary,
+    $modal-content-color: #FFFFFF,
+    $modal-header-border-color: none,
+    $modal-footer-border-color: none,
+    $modal-content-border-radius: 20px,
 
-$progress-bg: $dark-green; 
-$progress-border-radius: 10px;
+    $input-bg: globals.$bg-secondary,
+    $input-border-color: globals.$dark-gray,
+    $input-border-radius: 15px,
+    $input-color: globals.$light-gray,
+    $input-focus-border-color: globals.$bg-primary,
+    $input-placeholder-color: globals.$gray,
+    $input-border-width: 2px,
 
-$table-bg: $bg-primary;
-$table-border-color: $gray;
-$table-hover-bg: $dark-green; 
+    $progress-bg: globals.$dark-green,
+    $progress-border-radius: 10px,
 
-$btn-close-color: #ffffff;
-$btn-close-opacity: 1;
+    $table-bg: globals.$bg-primary,
+    $table-border-color: globals.$gray,
+    $table-hover-bg: globals.$dark-green,
 
-$pagination-color: #ffffff; 
-$pagination-bg: $dark-green; 
-$pagination-border-color: $gray; 
-$pagination-hover-color: #ffffff; 
-$pagination-hover-bg: #111111; 
-$pagination-hover-border-color: $gray; 
-$pagination-active-color: #ffffff;
-$pagination-active-bg: #111111; 
+    $btn-close-color: #ffffff,
+    $btn-close-opacity: 1,
 
-
-@import "bootstrap/scss/bootstrap";
+    $pagination-color: #ffffff,
+    $pagination-bg: globals.$dark-green,
+    $pagination-border-color: globals.$gray,
+    $pagination-hover-color: #ffffff,
+    $pagination-hover-bg: #111111,
+    $pagination-hover-border-color: globals.$gray,
+    $pagination-active-color: #ffffff,
+    $pagination-active-bg: #111111
+);

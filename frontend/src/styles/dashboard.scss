@@ -111,9 +111,9 @@ main.dashboard-container {
 
 
 .card-info-primary {
-    @include card-info(1700px, 157px, 20px, 32px 24px);
     background-color: $dark-green;
     grid-column: span 3;
+    @include card-info(1700px, 157px, 20px, 32px 24px);
 
     div > strong {
         font-size: 2em;
@@ -163,9 +163,9 @@ main.dashboard-container {
 }
 
 .card-info-secondary {
-    @include card-info(500px, 126px, 20px, 32px 24px);
     background-color: $dark-green;
     grid-column: span 1;
+    @include card-info(500px, 126px, 20px, 32px 24px);
 
     @media (max-width: 700px) {
         @include card-info(100%, 126px, 20px, 32px 24px);
